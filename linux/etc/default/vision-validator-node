@@ -1,0 +1,4 @@
+# Environment file for vision-validator-node systemd units and cron jobs
+# Set a custom Config path
+# VISION_CONFIG=
+VISION_ENV_FILE=/etc/vision/validator-node-config.env

@@ -2,12 +2,12 @@ import json
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.business.base import DuplicateSignatureError
-from pantos.validatornode.business.base import InvalidSignatureError
-from pantos.validatornode.business.base import InvalidSignerError
-from pantos.validatornode.business.base import UnknownTransferError
+from vision.validatornode.business.base import DuplicateSignatureError
+from vision.validatornode.business.base import InvalidSignatureError
+from vision.validatornode.business.base import InvalidSignerError
+from vision.validatornode.business.base import UnknownTransferError
 
 _RESTFUL_RESOURCE = '/transfersignature'
 
@@ -33,9 +33,9 @@ def transfer_signature_request(source_blockchain, source_transaction_id,
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_correct(mock_get_blockchain_config,
                                     mock_get_blockchain_client,
@@ -59,8 +59,8 @@ def test_transfer_signature_correct(mock_get_blockchain_config,
     'source_blockchain_id',
     [None, 'some_string', Blockchain.ETHEREUM.value,
      max(Blockchain) + 1])
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_bad_request_schema_error(
         mock_get_blockchain_config, mock_get_blockchain_client,
@@ -88,9 +88,9 @@ def test_transfer_signature_bad_request_schema_error(
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_bad_request_signature_error(
         mock_get_blockchain_config, mock_get_blockchain_client,
@@ -108,9 +108,9 @@ def test_transfer_signature_bad_request_signature_error(
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_conflict_signature_error(
         mock_get_blockchain_config, mock_get_blockchain_client,
@@ -128,9 +128,9 @@ def test_transfer_signature_conflict_signature_error(
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_forbidden_signer_error(mock_get_blockchain_config,
                                                    mock_get_blockchain_client,
@@ -150,9 +150,9 @@ def test_transfer_signature_forbidden_signer_error(mock_get_blockchain_config,
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_not_found_error(mock_get_blockchain_config,
                                             mock_get_blockchain_client,
@@ -172,9 +172,9 @@ def test_transfer_signature_not_found_error(mock_get_blockchain_config,
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.SignatureInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.SignatureInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_transfer_signature_internal_server_error(mock_get_blockchain_config,
                                                   mock_get_blockchain_client,

@@ -7,7 +7,7 @@ services:
     volumes:
       - type: bind
         source: ./keystore
-        target: /etc/pantos/validator-node.keystore
+        target: /etc/vision/validator-node.keystore
         read_only: true
   worker:
     env_file:
@@ -15,5 +15,5 @@ services:
     volumes:
       - type: bind
         source: ./keystore
-        target: /etc/pantos/validator-node.keystore
+        target: /etc/vision/validator-node.keystore
         read_only: true

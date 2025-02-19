@@ -1,0 +1,2 @@
+opt/vision/vision-validator-node/bin/vision-validator-node-server usr/bin/vision-validator-node-server
+opt/vision/vision-validator-node/bin/vision-validator-node-celery usr/bin/vision-validator-node-celery

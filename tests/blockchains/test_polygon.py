@@ -1,10 +1,10 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.blockchains.polygon import PolygonClient
-from pantos.validatornode.blockchains.polygon import PolygonClientError
+from vision.validatornode.blockchains.polygon import PolygonClient
+from vision.validatornode.blockchains.polygon import PolygonClientError
 
 
 @pytest.fixture(scope='module')

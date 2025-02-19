@@ -2,11 +2,11 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.business.base import UnknownTransferError
-from pantos.validatornode.business.transfers import TransferInteractorError
+from vision.validatornode.business.base import UnknownTransferError
+from vision.validatornode.business.transfers import TransferInteractorError
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 def test_get_validator_nonce_correct(mock_database_access, source_blockchain,
                                      source_transaction_id, validator_nonce,
                                      transfer_interactor):
@@ -19,7 +19,7 @@ def test_get_validator_nonce_correct(mock_database_access, source_blockchain,
     assert result == validator_nonce
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 def test_get_validator_nonce_unknown_transfer_error(mock_database_access,
                                                     source_blockchain,
                                                     source_transaction_id,
@@ -35,7 +35,7 @@ def test_get_validator_nonce_unknown_transfer_error(mock_database_access,
     assert isinstance(exception_info.value, TransferInteractorError)
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 def test_get_validator_nonce_database_error(mock_database_access,
                                             source_blockchain,
                                             source_transaction_id,

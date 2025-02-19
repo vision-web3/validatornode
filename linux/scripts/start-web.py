@@ -6,16 +6,16 @@ import subprocess
 import sys
 from importlib import resources
 
-from pantos.validatornode.configuration import config
-from pantos.validatornode.configuration import load_config
+from vision.validatornode.configuration import config
+from vision.validatornode.configuration import load_config
 
 print('Loading the configuration...')
 load_config()
 print('Configuration loaded')
 
-USER_NAME = 'pantos-validator-node'
-APP_DIRECTORY = '/opt/pantos/pantos-validator-node'
-WSGI_FILE = str(resources.path('pantos.validatornode', 'wsgi.py'))
+USER_NAME = 'vision-validator-node'
+APP_DIRECTORY = '/opt/vision/vision-validator-node'
+WSGI_FILE = str(resources.path('vision.validatornode', 'wsgi.py'))
 NON_ROOT_DEFAULT_HTTPS_PORT = 8443
 NON_ROOT_DEFAULT_HTTP_PORT = 8080
 application_config = config['application']
@@ -71,7 +71,7 @@ if port < 1024:
 
 # build the port command (along with the ssl certificate info if requested)
 gunicorn_command = (f"python -m gunicorn --bind {host}:{port} --workers 1 "
-                    "pantos.validatornode.application:create_application()")
+                    "vision.validatornode.application:create_application()")
 if ssl_certificate:
     gunicorn_command += (
         f" --certfile {ssl_certificate} --keyfile {ssl_private_key} ")

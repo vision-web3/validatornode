@@ -1,5 +1,5 @@
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
 _INTERNAL_TRANSFER_ID = 92068
 

@@ -2,13 +2,13 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.database.access import \
+from vision.validatornode.database.access import \
     update_transfer_source_transaction
 
 
 @pytest.mark.parametrize('source_block_number', [9807193, 258289])
 @pytest.mark.parametrize('source_transfer_id', [9652, 760115])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_source_transaction_correct(
         mock_get_session, database_session_maker, source_transfer_id,
         source_block_number, initialized_database_session, transfer):

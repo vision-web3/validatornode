@@ -1,7 +1,7 @@
 import pytest
 
-from pantos.validatornode.business.transfers import TransferInteractor
-from pantos.validatornode.entities import CrossChainTransfer
+from vision.validatornode.business.transfers import TransferInteractor
+from vision.validatornode.entities import CrossChainTransfer
 
 _SOURCE_HUB_ADDRESS = '0x716d4D0Ced39fe39fC936420d43B1B07f914F821'
 

@@ -3,14 +3,14 @@ import unittest.mock
 import uuid
 
 import pytest
-from pantos.common.blockchains.base import BlockchainUtilities
-from pantos.common.blockchains.base import BlockchainUtilitiesError
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.entities import TransactionStatus
+from vision.common.blockchains.base import BlockchainUtilities
+from vision.common.blockchains.base import BlockchainUtilitiesError
+from vision.common.blockchains.enums import Blockchain
+from vision.common.entities import TransactionStatus
 
-from pantos.validatornode.blockchains.base import BlockchainClient
-from pantos.validatornode.blockchains.base import BlockchainClientError
-from pantos.validatornode.blockchains.base import \
+from vision.validatornode.blockchains.base import BlockchainClient
+from vision.validatornode.blockchains.base import BlockchainClientError
+from vision.validatornode.blockchains.base import \
     UnresolvableTransferToSubmissionError
 
 _MOCK_CONFIG = {
@@ -33,7 +33,7 @@ _DESTINATION_TRANSFER_ID = 9372
 
 @pytest.fixture(scope='module')
 @unittest.mock.patch(
-    'pantos.validatornode.blockchains.base.initialize_blockchain_utilities')
+    'vision.validatornode.blockchains.base.initialize_blockchain_utilities')
 @unittest.mock.patch.object(BlockchainClient, '_get_config',
                             return_value=_MOCK_CONFIG)
 @unittest.mock.patch.object(BlockchainClient, 'get_blockchain',
@@ -41,13 +41,13 @@ _DESTINATION_TRANSFER_ID = 9372
 @unittest.mock.patch.object(BlockchainClient, '__abstractmethods__', set())
 def blockchain_client(mock_get_blockchain, mock_get_config,
                       mock_initialize_blockchain_utilities, config_dict):
-    with unittest.mock.patch('pantos.validatornode.blockchains.base.config',
+    with unittest.mock.patch('vision.validatornode.blockchains.base.config',
                              config_dict):
         return BlockchainClient()
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.blockchains.base.initialize_blockchain_utilities')
+    'vision.validatornode.blockchains.base.initialize_blockchain_utilities')
 @unittest.mock.patch.object(BlockchainClient, '_get_config',
                             return_value=_MOCK_CONFIG)
 @unittest.mock.patch.object(BlockchainClient, 'get_blockchain',
@@ -55,14 +55,14 @@ def blockchain_client(mock_get_blockchain, mock_get_config,
 @unittest.mock.patch.object(BlockchainClient, '__abstractmethods__', set())
 def test_init_correct(mock_get_blockchain, mock_get_config,
                       mock_initialize_blockchain_utilities, config_dict):
-    with unittest.mock.patch('pantos.validatornode.blockchains.base.config',
+    with unittest.mock.patch('vision.validatornode.blockchains.base.config',
                              config_dict):
         BlockchainClient()
     mock_initialize_blockchain_utilities.assert_called_once()
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.blockchains.base.initialize_blockchain_utilities',
+    'vision.validatornode.blockchains.base.initialize_blockchain_utilities',
     side_effect=BlockchainUtilitiesError(''))
 @unittest.mock.patch.object(BlockchainClient, '_create_error',
                             return_value=BlockchainClientError(''))
@@ -75,7 +75,7 @@ def test_init_error(mock_get_blockchain, mock_get_config, mock_create_error,
                     mock_initialize_blockchain_utilities, config_dict):
     with pytest.raises(BlockchainClientError) as exception_info:
         with unittest.mock.patch(
-                'pantos.validatornode.blockchains.base.config', config_dict):
+                'vision.validatornode.blockchains.base.config', config_dict):
             BlockchainClient()
     assert isinstance(exception_info.value.__context__,
                       BlockchainUtilitiesError)

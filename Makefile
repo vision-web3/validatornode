@@ -1,6 +1,6 @@
-PANTOS_VALIDATOR_NODE_VERSION := $(shell command -v poetry >/dev/null 2>&1 && poetry version -s || echo "0.0.0")
-PANTOS_VALIDATOR_NODE_SSH_HOST ?= bdev-validatornode01
-PYTHON_FILES_WITHOUT_TESTS := pantos/validatornode linux/scripts/start-web.py
+VISION_VALIDATOR_NODE_VERSION := $(shell command -v poetry >/dev/null 2>&1 && poetry version -s || echo "0.0.0")
+VISION_VALIDATOR_NODE_SSH_HOST ?= bdev-validatornode01
+PYTHON_FILES_WITHOUT_TESTS := vision/validatornode linux/scripts/start-web.py
 PYTHON_FILES := $(PYTHON_FILES_WITHOUT_TESTS) tests
 STACK_BASE_NAME=stack-validator-node
 INSTANCE_COUNT ?= 1
@@ -70,33 +70,33 @@ test-postgres:
 
 .PHONY: coverage
 coverage:
-	poetry run python3 -m pytest --cov-report term-missing --cov=pantos tests --ignore tests/database/postgres
+	poetry run python3 -m pytest --cov-report term-missing --cov=vision tests --ignore tests/database/postgres
 
 .PHONY: coverage-postgres
 coverage-postgres:
-	poetry run python3 -m pytest --cov-report term-missing --cov=pantos tests/database/postgres
+	poetry run python3 -m pytest --cov-report term-missing --cov=vision tests/database/postgres
 
 .PHONY: coverage-all
 coverage-all:
-	poetry run python3 -m pytest --cov-report term-missing --cov=pantos tests
+	poetry run python3 -m pytest --cov-report term-missing --cov=vision tests
 
 .PHONY: tar
-tar: dist/pantos_validator_node-$(PANTOS_VERSION).tar.gz
+tar: dist/vision_validator_node-$(VISION_VERSION).tar.gz
 
-dist/pantos_validator_node-$(PANTOS_VERSION).tar.gz: pantos alembic.ini validator-node-config.yml validator-node-config.env pantos-validator-node.sh pantos-validator-node-worker.sh
-	cp validator-node-config.yml pantos/validator-node-config.yml
-	cp validator-node-config.env pantos/validator-node-config.env
-	cp alembic.ini pantos/alembic.ini
-	cp pantos-validator-node.sh pantos/pantos-validator-node.sh
-	cp pantos-validator-node-worker.sh pantos/pantos-validator-node-worker.sh
-	chmod 755 pantos/pantos-validator-node.sh
-	chmod 755 pantos/pantos-validator-node-worker.sh
+dist/vision_validator_node-$(VISION_VERSION).tar.gz: vision alembic.ini validator-node-config.yml validator-node-config.env vision-validator-node.sh vision-validator-node-worker.sh
+	cp validator-node-config.yml vision/validator-node-config.yml
+	cp validator-node-config.env vision/validator-node-config.env
+	cp alembic.ini vision/alembic.ini
+	cp vision-validator-node.sh vision/vision-validator-node.sh
+	cp vision-validator-node-worker.sh vision/vision-validator-node-worker.sh
+	chmod 755 vision/vision-validator-node.sh
+	chmod 755 vision/vision-validator-node-worker.sh
 	poetry build -f sdist
-	rm pantos/validator-node-config.yml
-	rm pantos/validator-node-config.env
-	rm pantos/alembic.ini
-	rm pantos/pantos-validator-node.sh
-	rm pantos/pantos-validator-node-worker.sh
+	rm vision/validator-node-config.yml
+	rm vision/validator-node-config.env
+	rm vision/alembic.ini
+	rm vision/vision-validator-node.sh
+	rm vision/vision-validator-node-worker.sh
 
 check-poetry-plugin:
 	@if poetry self show plugins | grep -q poetry-plugin-freeze; then \
@@ -110,16 +110,16 @@ freeze-wheel: check-poetry-plugin
 	poetry freeze-wheel
 
 .PHONY: wheel
-wheel: dist/pantos_validator_node-$(PANTOS_VERSION)-py3-none-any.whl freeze-wheel
+wheel: dist/vision_validator_node-$(VISION_VERSION)-py3-none-any.whl freeze-wheel
 
-dist/pantos_validator_node-$(PANTOS_VERSION)-py3-none-any.whl: pantos alembic.ini validator-node-config.yml validator-node-config.env
-	cp validator-node-config.yml pantos/validator-node-config.yml
-	cp validator-node-config.env pantos/validator-node-config.env
-	cp alembic.ini pantos/alembic.ini
+dist/vision_validator_node-$(VISION_VERSION)-py3-none-any.whl: vision alembic.ini validator-node-config.yml validator-node-config.env
+	cp validator-node-config.yml vision/validator-node-config.yml
+	cp validator-node-config.env vision/validator-node-config.env
+	cp alembic.ini vision/alembic.ini
 	poetry build -f wheel
-	rm pantos/alembic.ini
-	rm pantos/validator-node-config.yml
-	rm pantos/validator-node-config.env
+	rm vision/alembic.ini
+	rm vision/validator-node-config.yml
+	rm vision/validator-node-config.env
 
 .PHONY: debian-build-deps
 debian-build-deps:
@@ -128,13 +128,13 @@ debian-build-deps:
 .PHONY: debian-full
 debian-full:
 	mkdir -p dist
-	sed 's/VERSION_PLACEHOLDER/$(PANTOS_VALIDATOR_NODE_VERSION)/' configurator/DEBIAN/control.template > configurator/DEBIAN/control
-	dpkg-deb --build configurator dist/pantos-validator-node-full_$(PANTOS_VALIDATOR_NODE_VERSION)_all.deb
+	sed 's/VERSION_PLACEHOLDER/$(VISION_VALIDATOR_NODE_VERSION)/' configurator/DEBIAN/control.template > configurator/DEBIAN/control
+	dpkg-deb --build configurator dist/vision-validator-node-full_$(VISION_VALIDATOR_NODE_VERSION)_all.deb
 	rm configurator/DEBIAN/control
 
 .PHONY: debian
 debian:
-	$(eval debian_package := pantos-validator-node_$(PANTOS_VALIDATOR_NODE_VERSION)_*.deb)
+	$(eval debian_package := vision-validator-node_$(VISION_VALIDATOR_NODE_VERSION)_*.deb)
 	@if ! conda --version; then \
 		echo "Conda not found. Please install conda."; \
 		exit 1; \
@@ -142,70 +142,70 @@ debian:
 	dpkg-buildpackage -uc -us -g
 	mkdir -p dist
 	ARCHITECTURE=$$(dpkg --print-architecture); \
-	mv ../$(debian_package) dist/pantos-validator-node_$(PANTOS_SERVICE_NODE_VERSION)_$${ARCHITECTURE}.deb
+	mv ../$(debian_package) dist/vision-validator-node_$(VISION_SERVICE_NODE_VERSION)_$${ARCHITECTURE}.deb
 
 .PHONY: debian-all
 debian-all: debian debian-full
 
 .PHONY: docker-debian-build
 docker-debian-build:
-	docker buildx build -t pantos-validator-node-build -f Dockerfile --target dev . --load $(ARGS);
-	CONTAINER_ID=$$(docker create pantos-validator-node-build); \
+	docker buildx build -t vision-validator-node-build -f Dockerfile --target dev . --load $(ARGS);
+	CONTAINER_ID=$$(docker create vision-validator-node-build); \
     docker cp $${CONTAINER_ID}:/app/dist/ .; \
     docker rm $${CONTAINER_ID}
 
 .PHONY: remote-install
 remote-install: debian-all
-	$(eval deb_file := pantos-validator-node*_$(PANTOS_VALIDATOR_NODE_VERSION)_*.deb)
-	scp dist/$(deb_file) $(PANTOS_VALIDATOR_NODE_SSH_HOST):
-ifdef DEV_PANTOS_COMMON
-	scp -r $(DEV_PANTOS_COMMON) $(PANTOS_VALIDATOR_NODE_SSH_HOST):
-	ssh -t $(PANTOS_VALIDATOR_NODE_SSH_HOST) "\
-		sudo systemctl stop pantos-validator-node-celery;\
-		sudo systemctl stop pantos-validator-node-server;\
+	$(eval deb_file := vision-validator-node*_$(VISION_VALIDATOR_NODE_VERSION)_*.deb)
+	scp dist/$(deb_file) $(VISION_VALIDATOR_NODE_SSH_HOST):
+ifdef DEV_VISION_COMMON
+	scp -r $(DEV_VISION_COMMON) $(VISION_VALIDATOR_NODE_SSH_HOST):
+	ssh -t $(VISION_VALIDATOR_NODE_SSH_HOST) "\
+		sudo systemctl stop vision-validator-node-celery;\
+		sudo systemctl stop vision-validator-node-server;\
 		sudo apt install -y ./$(deb_file);\
-		sudo rm -rf /opt/pantos/pantos-validator-node/lib/python3.*/site-packages/pantos/common/;\
-		sudo cp -r common/ /opt/pantos/pantos-validator-node/lib/python3.*/site-packages/pantos/;\
-		sudo systemctl start pantos-validator-node-server;\
-		sudo systemctl start pantos-validator-node-celery;\
+		sudo rm -rf /opt/vision/vision-validator-node/lib/python3.*/site-packages/vision/common/;\
+		sudo cp -r common/ /opt/vision/vision-validator-node/lib/python3.*/site-packages/vision/;\
+		sudo systemctl start vision-validator-node-server;\
+		sudo systemctl start vision-validator-node-celery;\
 		rm -rf common;\
 		rm $(deb_file)"
 else
-	ssh -t $(PANTOS_VALIDATOR_NODE_SSH_HOST) "\
-		sudo systemctl stop pantos-validator-node-celery;\
-		sudo systemctl stop pantos-validator-node-server;\
+	ssh -t $(VISION_VALIDATOR_NODE_SSH_HOST) "\
+		sudo systemctl stop vision-validator-node-celery;\
+		sudo systemctl stop vision-validator-node-server;\
 		sudo apt install -y ./$(deb_file);\
-		sudo systemctl start pantos-validator-node-server;\
-		sudo systemctl start pantos-validator-node-celery;\
+		sudo systemctl start vision-validator-node-server;\
+		sudo systemctl start vision-validator-node-celery;\
 		rm $(deb_file)"
 endif
 
 .PHONY: local-common
 local-common:
-ifndef DEV_PANTOS_COMMON
-	$(error Please define DEV_PANTOS_COMMON variable)
+ifndef DEV_VISION_COMMON
+	$(error Please define DEV_VISION_COMMON variable)
 endif
-	$(eval CURRENT_COMMON := $(shell echo .venv/lib/python3.*/site-packages/pantos/common))
+	$(eval CURRENT_COMMON := $(shell echo .venv/lib/python3.*/site-packages/vision/common))
 	@if [ -d "$(CURRENT_COMMON)" ]; then \
 		rm -rf "$(CURRENT_COMMON)"; \
-		ln -s "$(DEV_PANTOS_COMMON)" "$(CURRENT_COMMON)"; \
+		ln -s "$(DEV_VISION_COMMON)" "$(CURRENT_COMMON)"; \
 	else \
 		echo "Directory $(CURRENT_COMMON) does not exist"; \
 	fi
 
 .PHONY: install
-install: dist/pantos_validator_node-$(PANTOS_VERSION)-py3-none-any.whl
-	poetry run python3 -m pip install dist/pantos_validator_node-$(PANTOS_VERSION)-py3-none-any.whl
+install: dist/vision_validator_node-$(VISION_VERSION)-py3-none-any.whl
+	poetry run python3 -m pip install dist/vision_validator_node-$(VISION_VERSION)-py3-none-any.whl
 
 .PHONY: uninstall
 uninstall:
-	poetry run python3 -m pip uninstall -y pantos-validator-node
+	poetry run python3 -m pip uninstall -y vision-validator-node
 
 .PHONY: clean
 clean:
 	rm -r -f build/
 	rm -r -f dist/
-	rm -r -f pantos_validator_node.egg-info/
+	rm -r -f vision_validator_node.egg-info/
 
 check-swarm-init:
 	@if [ "$$(docker info --format '{{.Swarm.LocalNodeState}}')" != "active" ]; then \

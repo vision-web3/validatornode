@@ -3,11 +3,11 @@ import unittest.mock
 
 import celery.exceptions  # type: ignore
 import pytest
-from pantos.common.entities import TransactionStatus
+from vision.common.entities import TransactionStatus
 
-from pantos.validatornode.business.transfers import TransferInteractorError
-from pantos.validatornode.business.transfers import validate_transfer_task
-from pantos.validatornode.database.enums import TransferStatus
+from vision.validatornode.business.transfers import TransferInteractorError
+from vision.validatornode.business.transfers import validate_transfer_task
+from vision.validatornode.database.enums import TransferStatus
 
 _TASK_INTERVAL = 120
 
@@ -18,16 +18,16 @@ _TASK_INTERVAL = 120
 @pytest.mark.parametrize('recipient_address_valid', [True, False])
 @pytest.mark.parametrize('in_other_source_transaction', [True, False])
 @pytest.mark.parametrize('is_primary_node', [True, False])
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.business.base.config')
+    'vision.validatornode.business.transfers.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.business.base.config')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'submit_transfer_onchain': {
                 'retry_interval_in_seconds': _TASK_INTERVAL
@@ -99,13 +99,13 @@ def test_validate_transfer_confirmed_correct(
                 countdown=_TASK_INTERVAL)
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_validate_transfer_unconfirmed_correct(
         mock_get_blockchain_client, mock_database_access,
         mock_submit_transfer_onchain_task,
@@ -126,13 +126,13 @@ def test_validate_transfer_unconfirmed_correct(
     mock_submit_transfer_to_primary_node_task.apply_async.assert_not_called()
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_validate_transfer_reverted_correct(
         mock_get_blockchain_client, mock_database_access,
         mock_submit_transfer_onchain_task,
@@ -154,13 +154,13 @@ def test_validate_transfer_reverted_correct(
     mock_submit_transfer_to_primary_node_task.apply_async.assert_not_called()
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_validate_transfer_invalid_correct(
         mock_get_blockchain_client, mock_database_access,
         mock_submit_transfer_onchain_task,
@@ -182,13 +182,13 @@ def test_validate_transfer_invalid_correct(
     mock_submit_transfer_to_primary_node_task.apply_async.assert_not_called()
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_validate_transfer_not_found_in_transaction_error(
         mock_get_blockchain_client, mock_database_access,
         mock_submit_transfer_onchain_task,
@@ -211,13 +211,13 @@ def test_validate_transfer_not_found_in_transaction_error(
     mock_submit_transfer_to_primary_node_task.apply_async.assert_not_called()
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.submit_transfer_onchain_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.submit_transfer_onchain_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_validate_transfer_other_error(
         mock_get_blockchain_client, mock_database_access,
         mock_submit_transfer_onchain_task,
@@ -239,7 +239,7 @@ def test_validate_transfer_other_error(
 
 
 @pytest.mark.parametrize('validation_completed', [True, False])
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'validate_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
@@ -247,7 +247,7 @@ def test_validate_transfer_other_error(
     }
 })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_validate_transfer_task_correct(mock_transfer_interactor,
                                         validation_completed,
                                         internal_transfer_id,
@@ -266,7 +266,7 @@ def test_validate_transfer_task_correct(mock_transfer_interactor,
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'validate_transfer': {
                 'retry_interval_after_error_in_seconds': _TASK_INTERVAL
@@ -274,7 +274,7 @@ def test_validate_transfer_task_correct(mock_transfer_interactor,
         }
     })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_validate_transfer_task_error(mock_transfer_interactor,
                                       internal_transfer_id,
                                       cross_chain_transfer,

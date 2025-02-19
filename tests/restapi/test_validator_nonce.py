@@ -2,16 +2,16 @@ import json
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.business.base import UnknownTransferError
+from vision.validatornode.business.base import UnknownTransferError
 
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.TransferInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.TransferInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_validator_nonce_correct(mock_get_blockchain_config,
                                  mock_get_blockchain_client,
@@ -37,8 +37,8 @@ def test_validator_nonce_correct(mock_get_blockchain_config,
     'source_blockchain_id',
     [None, 'some_string', Blockchain.ETHEREUM.value,
      max(Blockchain) + 1])
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_validator_nonce_bad_request_error(mock_get_blockchain_config,
                                            mock_get_blockchain_client,
@@ -64,9 +64,9 @@ def test_validator_nonce_bad_request_error(mock_get_blockchain_config,
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.TransferInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.TransferInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_validator_nonce_not_found_error(mock_get_blockchain_config,
                                          mock_get_blockchain_client,
@@ -87,9 +87,9 @@ def test_validator_nonce_not_found_error(mock_get_blockchain_config,
 
 @pytest.mark.filterwarnings(
     'ignore:The \'__version__\' attribute is deprecated')
-@unittest.mock.patch('pantos.validatornode.restapi.TransferInteractor')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.restapi.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.restapi.TransferInteractor')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.restapi.get_blockchain_config',
                      return_value={'active': True})
 def test_validator_nonce_internal_server_error(mock_get_blockchain_config,
                                                mock_get_blockchain_client,

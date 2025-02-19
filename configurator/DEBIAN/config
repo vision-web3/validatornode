@@ -12,7 +12,7 @@ RUN_AS="$APP_ID"
 POSTGRESQL_INSTALLED=$(dpkg-query -W --showformat='${Status}\n' postgresql | grep "install ok installed" || true)
 RABBITMQ_INSTALLED=$(dpkg-query -W --showformat='${Status}\n' rabbitmq-server | grep "install ok installed" || true)
 
-base_directory='/etc/pantos'
+base_directory='/etc/vision'
 env_file="${base_directory}/validator-node-config.env"
 
 if [ -f "${env_file}" ]; then
@@ -20,22 +20,22 @@ if [ -f "${env_file}" ]; then
 fi
 
 if [ -n "${POSTGRESQL_INSTALLED}" ]; then
-    db_fset pantos/common/configure_postgresql seen false
-    db_input high pantos/common/configure_postgresql || true
+    db_fset vision/common/configure_postgresql seen false
+    db_input high vision/common/configure_postgresql || true
 fi
 
 if [ -n "${RABBITMQ_INSTALLED}" ]; then
-    db_fset pantos/common/configure_rabbitmq seen false
-    db_input high pantos/common/configure_rabbitmq || true
+    db_fset vision/common/configure_rabbitmq seen false
+    db_input high vision/common/configure_rabbitmq || true
 fi
 
 db_go
 
-db_get pantos/common/configure_postgresql
+db_get vision/common/configure_postgresql
 configure_postgresql=$RET
 
-db_get pantos/common/configure_rabbitmq
+db_get vision/common/configure_rabbitmq
 configure_rabbitmq=$RET
 
-db_input high pantos/common/start_services || true
+db_input high vision/common/start_services || true
 db_go

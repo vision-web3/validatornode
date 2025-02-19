@@ -2,14 +2,14 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.database.access import read_validator_node_signatures
-from pantos.validatornode.database.models import ValidatorNode
-from pantos.validatornode.database.models import ValidatorNodeSignature
+from vision.validatornode.database.access import read_validator_node_signatures
+from vision.validatornode.database.models import ValidatorNode
+from vision.validatornode.database.models import ValidatorNodeSignature
 
 
 @pytest.mark.parametrize('other_signatures', [True, False])
 @pytest.mark.parametrize('number_signatures', [0, 1, 2, 3])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_read_validator_node_signatures_correct(
         mock_get_session, database_session_maker, number_signatures,
         other_signatures, initialized_database_session, transfer,

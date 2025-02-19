@@ -3,14 +3,14 @@ import uuid
 
 import celery.exceptions  # type: ignore
 import pytest
-from pantos.common.entities import TransactionStatus
+from vision.common.entities import TransactionStatus
 
-from pantos.validatornode.blockchains.base import BlockchainClient
-from pantos.validatornode.blockchains.base import \
+from vision.validatornode.blockchains.base import BlockchainClient
+from vision.validatornode.blockchains.base import \
     UnresolvableTransferToSubmissionError
-from pantos.validatornode.business.transfers import TransferInteractorError
-from pantos.validatornode.business.transfers import confirm_transfer_task
-from pantos.validatornode.database.enums import TransferStatus
+from vision.validatornode.business.transfers import TransferInteractorError
+from vision.validatornode.business.transfers import confirm_transfer_task
+from vision.validatornode.database.enums import TransferStatus
 
 _INTERNAL_TRANSACTION_ID = uuid.uuid4()
 
@@ -25,7 +25,7 @@ _TASK_INTERVAL = 120
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_confirm_transfer_unconfirmed_correct(mock_get_blockchain_client,
                                               transfer_interactor,
                                               internal_transfer_id,
@@ -39,11 +39,11 @@ def test_confirm_transfer_unconfirmed_correct(mock_get_blockchain_client,
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.validate_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.validate_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'validate_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
@@ -76,9 +76,9 @@ def test_confirm_transfer_reverted_correct(
 
 
 @pytest.mark.parametrize('is_reversal_transfer', [True, False])
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 def test_confirm_transfer_confirmed_correct(
         mock_get_blockchain_client, mock_database_access, is_reversal_transfer,
         transfer_interactor, internal_transfer_id, cross_chain_transfer):
@@ -100,11 +100,11 @@ def test_confirm_transfer_confirmed_correct(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.validate_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.validate_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.get_blockchain_client')
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'validate_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
@@ -135,7 +135,7 @@ def test_confirm_transfer_unresolvable_error(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client',
+    'vision.validatornode.business.transfers.get_blockchain_client',
     side_effect=Exception)
 def test_confirm_transfer_error(mock_get_blockchain_client,
                                 transfer_interactor, internal_transfer_id,
@@ -152,7 +152,7 @@ def test_confirm_transfer_error(mock_get_blockchain_client,
 
 
 @pytest.mark.parametrize('confirmation_completed', [True, False])
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'confirm_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
@@ -160,7 +160,7 @@ def test_confirm_transfer_error(mock_get_blockchain_client,
     }
 })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_confirm_transfer_task_correct(mock_transfer_interactor,
                                        confirmation_completed,
                                        internal_transfer_id,
@@ -182,7 +182,7 @@ def test_confirm_transfer_task_correct(mock_transfer_interactor,
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'confirm_transfer': {
                 'retry_interval_after_error_in_seconds': _TASK_INTERVAL
@@ -190,7 +190,7 @@ def test_confirm_transfer_task_correct(mock_transfer_interactor,
         }
     })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_confirm_transfer_task_error(mock_transfer_interactor,
                                      internal_transfer_id,
                                      cross_chain_transfer,

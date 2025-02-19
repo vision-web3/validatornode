@@ -11,25 +11,25 @@ import pytest
 import semantic_version  # type: ignore
 import web3
 import web3.exceptions
-from pantos.common.blockchains.base import NodeConnections
-from pantos.common.blockchains.base import ResultsNotMatchingError
-from pantos.common.blockchains.base import TransactionNonceTooLowError
-from pantos.common.blockchains.base import TransactionUnderpricedError
-from pantos.common.blockchains.base import VersionedContractAbi
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.blockchains.enums import ContractAbi
-from pantos.common.types import BlockchainAddress
+from vision.common.blockchains.base import NodeConnections
+from vision.common.blockchains.base import ResultsNotMatchingError
+from vision.common.blockchains.base import TransactionNonceTooLowError
+from vision.common.blockchains.base import TransactionUnderpricedError
+from vision.common.blockchains.base import VersionedContractAbi
+from vision.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import ContractAbi
+from vision.common.types import BlockchainAddress
 
-from pantos.validatornode.blockchains.base import BlockchainClient
-from pantos.validatornode.blockchains.base import NonMatchingForwarderError
-from pantos.validatornode.blockchains.base import \
+from vision.validatornode.blockchains.base import BlockchainClient
+from vision.validatornode.blockchains.base import NonMatchingForwarderError
+from vision.validatornode.blockchains.base import \
     SourceTransferIdAlreadyUsedError
-from pantos.validatornode.blockchains.ethereum import _EIP712_DOMAIN_NAME
-from pantos.validatornode.blockchains.ethereum import \
+from vision.validatornode.blockchains.ethereum import _EIP712_DOMAIN_NAME
+from vision.validatornode.blockchains.ethereum import \
     _TRANSFER_TO_MESSAGE_TYPES
-from pantos.validatornode.blockchains.ethereum import EthereumClient
-from pantos.validatornode.blockchains.ethereum import EthereumClientError
-from pantos.validatornode.entities import CrossChainTransfer
+from vision.validatornode.blockchains.ethereum import EthereumClient
+from vision.validatornode.blockchains.ethereum import EthereumClientError
+from vision.validatornode.entities import CrossChainTransfer
 
 _CHAIN_ID = 1638
 
@@ -253,7 +253,7 @@ _HUB_ADDRESS = '0x7A9D071aD683B583BfB4cc91c2A21D9bB712Cd32'
 
 _FORWARDER_ADDRESS = '0x7F029687e25D506645030788a54df4B99d837545'
 
-_PAN_TOKEN_ADDRESS = '0x28C768862A63ee0501B10FEC97B2351DD6FaC8C2'
+_VSN_TOKEN_ADDRESS = '0x28C768862A63ee0501B10FEC97B2351DD6FaC8C2'
 
 _MINIMUM_VALIDATOR_NODE_SIGNATURES = 3
 
@@ -384,9 +384,9 @@ def incoming_transfer_message_data():
         },
         'destinationBlockchainId': _INCOMING_TRANSFER.destination_blockchain.
         value,
-        'pantosHub': _HUB_ADDRESS,
-        'pantosForwarder': _FORWARDER_ADDRESS,
-        'pantosToken': _PAN_TOKEN_ADDRESS
+        'visionHub': _HUB_ADDRESS,
+        'visionForwarder': _FORWARDER_ADDRESS,
+        'visionToken': _VSN_TOKEN_ADDRESS
     }
 
 
@@ -431,7 +431,7 @@ def ethereum_client(mock_get_config, config_dict, chain_id, keystore_file_path,
     mock_get_config.return_value = mock_blockchain_config
     mock_create_node_connections = unittest.mock.MagicMock()
     mock_create_node_connections.return_value = node_connections
-    with unittest.mock.patch('pantos.validatornode.blockchains.base.config',
+    with unittest.mock.patch('vision.validatornode.blockchains.base.config',
                              config_dict):
         ethereum_client = EthereumClient()
     assert ethereum_client.get_utilities()._default_private_key == _PRIVATE_KEY
@@ -842,7 +842,7 @@ def test_recover_transfer_to_signer_address_correct(
         'chain_id': chain_id,
         'hub': _HUB_ADDRESS,
         'forwarder': _FORWARDER_ADDRESS,
-        'pan_token': _PAN_TOKEN_ADDRESS
+        'vsn_token': _VSN_TOKEN_ADDRESS
     }
     mock_get_config.return_value = mock_config
     signed_message = web3.Account.sign_typed_data(
@@ -873,7 +873,7 @@ def test_recover_transfer_to_signer_address_error(mock_get_config, chain_id,
         'chain_id': chain_id,
         'hub': _HUB_ADDRESS,
         'forwarder': _FORWARDER_ADDRESS,
-        'pan_token': _PAN_TOKEN_ADDRESS
+        'vsn_token': _VSN_TOKEN_ADDRESS
     }
     mock_get_config.return_value = mock_config
     request = BlockchainClient.TransferToSignerAddressRecoveryRequest(
@@ -896,7 +896,7 @@ def test_recover_transfer_to_signer_address_error(mock_get_config, chain_id,
         'chain_id': _CHAIN_ID,
         'hub': _HUB_ADDRESS,
         'forwarder': _FORWARDER_ADDRESS,
-        'pan_token': _PAN_TOKEN_ADDRESS
+        'vsn_token': _VSN_TOKEN_ADDRESS
     })
 def test_sign_transfer_to_message_correct(mock_get_config, eip712_domain_data,
                                           incoming_transfer_message_data,
@@ -936,7 +936,7 @@ def test_sign_transfer_to_message_destination_blockchain_error(
         'chain_id': _CHAIN_ID,
         'hub': _HUB_ADDRESS,
         'forwarder': _FORWARDER_ADDRESS,
-        'pan_token': _INCOMING_TRANSFER.destination_token_address
+        'vsn_token': _INCOMING_TRANSFER.destination_token_address
     })
 def test_sign_transfer_to_message_sign_message_error(mock_get_config,
                                                      mock_sign_message,
@@ -971,7 +971,7 @@ def test_sort_validator_node_signatures_correct(ethereum_client):
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.blockchains.ethereum.database_access')
+    'vision.validatornode.blockchains.ethereum.database_access')
 @unittest.mock.patch.object(EthereumClient, '_create_hub_contract')
 @unittest.mock.patch.object(EthereumClient, '_get_config')
 def test_start_transfer_to_submission_correct(mock_get_config,
@@ -981,7 +981,7 @@ def test_start_transfer_to_submission_correct(mock_get_config,
                                               node_connections, w3):
     mock_config = {
         'hub': '0xFB37499DC5401Dc39a0734df1fC7924d769721d5',
-        'pan_token': _INCOMING_TRANSFER.destination_token_address,
+        'vsn_token': _INCOMING_TRANSFER.destination_token_address,
         'min_adaptable_fee_per_gas': 1000000000,
         'max_total_fee_per_gas': 50000000000,
         'adaptable_fee_increase_factor': 1.101,
@@ -997,7 +997,7 @@ def test_start_transfer_to_submission_correct(mock_get_config,
     mock_contract_caller.isValidValidatorNodeNonce().get.return_value = True
     mock_hub_contract.caller.return_value = mock_contract_caller
     versioned_hub_contract_abi = VersionedContractAbi(
-        ContractAbi.PANTOS_HUB, semantic_version.Version('1.0.0'))
+        ContractAbi.VISION_HUB, semantic_version.Version('1.0.0'))
     mock_hub_contract.events = \
         ethereum_client.get_utilities().create_contract(
             mock_config['hub'], versioned_hub_contract_abi,
@@ -1060,7 +1060,7 @@ def test_start_transfer_to_submission_destination_blockchain_error(
     'transaction_error',
     [TransactionNonceTooLowError, TransactionUnderpricedError])
 @unittest.mock.patch(
-    'pantos.validatornode.blockchains.ethereum.database_access')
+    'vision.validatornode.blockchains.ethereum.database_access')
 @unittest.mock.patch.object(EthereumClient, '_create_hub_contract')
 @unittest.mock.patch.object(EthereumClient, '_get_config')
 def test_start_transfer_to_submission_transaction_error(
@@ -1084,9 +1084,9 @@ def test_start_transfer_to_submission_transaction_error(
 
 @pytest.mark.parametrize(
     'verify_transfer_to_error',
-    [('PantosHub: source transfer ID already used',
+    [('VisionHub: source transfer ID already used',
       SourceTransferIdAlreadyUsedError),
-     ('PantosHub: Forwarder of Hub and transferred token must match',
+     ('VisionHub: Forwarder of Hub and transferred token must match',
       NonMatchingForwarderError),
      ('some unknown error message', EthereumClientError)])
 @unittest.mock.patch.object(EthereumClient, '_create_hub_contract')

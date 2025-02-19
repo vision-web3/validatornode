@@ -3,11 +3,11 @@ import unittest.mock
 import uuid
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.blockchains.base import BlockchainClient
-from pantos.validatornode.business.transfers import TransferInteractorError
-from pantos.validatornode.entities import CrossChainTransfer
+from vision.validatornode.blockchains.base import BlockchainClient
+from vision.validatornode.business.transfers import TransferInteractorError
+from vision.validatornode.entities import CrossChainTransfer
 
 _SOURCE_BLOCKCHAIN = list(Blockchain)[0]
 
@@ -33,15 +33,15 @@ _TASK_INTERVAL = 120
 @pytest.mark.parametrize('last_block_number', _LAST_BLOCK_NUMBERS)
 @pytest.mark.parametrize('confirmations', _CONFIRMATIONS)
 @pytest.mark.parametrize('from_block', _FROM_BLOCK)
-@unittest.mock.patch('pantos.validatornode.business.transfers.random')
+@unittest.mock.patch('vision.validatornode.business.transfers.random')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.validate_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.validate_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.get_blockchain_config')
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'validate_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
@@ -105,11 +105,11 @@ def test_detect_new_transfers_correct(
                 outgoing_transfers_response.to_block_number)
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
+    'vision.validatornode.business.transfers.get_blockchain_config')
 def test_detect_new_transfers_block_number_error(mock_get_blockchain_config,
                                                  mock_get_blockchain_client,
                                                  mock_database_access,
@@ -127,12 +127,12 @@ def test_detect_new_transfers_block_number_error(mock_get_blockchain_config,
         transfer_interactor.detect_new_transfers(_SOURCE_BLOCKCHAIN)
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access',
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access',
                      side_effect=Exception)
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
+    'vision.validatornode.business.transfers.get_blockchain_config')
 def test_detect_new_transfers_other_error(mock_get_blockchain_config,
                                           mock_get_blockchain_client,
                                           mock_database_access,

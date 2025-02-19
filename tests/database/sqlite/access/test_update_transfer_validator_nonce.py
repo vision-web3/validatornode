@@ -3,11 +3,11 @@ import unittest.mock
 
 import sqlalchemy.orm
 
-from pantos.validatornode.database.access import \
+from vision.validatornode.database.access import \
     update_transfer_validator_nonce
 
 
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_validator_nonce_correct(
         mock_get_session_maker, initialized_database_session_maker, transfer,
         other_validator_nonce):

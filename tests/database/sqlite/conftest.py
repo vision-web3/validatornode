@@ -2,9 +2,9 @@ import pytest
 import sqlalchemy
 import sqlalchemy.orm
 
-from pantos.validatornode.database.models import \
+from vision.validatornode.database.models import \
     UNIQUE_BLOCKCHAIN_NONCE_CONSTRAINT
-from pantos.validatornode.database.models import Base
+from vision.validatornode.database.models import Base
 
 
 @pytest.fixture(scope='session')

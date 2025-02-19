@@ -1,5 +1,5 @@
 .debhelper
-pantos-validator-node
+vision-validator-node
 tmp
 *.debhelper
 *.substvars

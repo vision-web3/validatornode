@@ -1,13 +1,13 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.types import BlockchainAddress
+from vision.common.blockchains.enums import Blockchain
+from vision.common.types import BlockchainAddress
 
-from pantos.validatornode.database.access import read_validator_node_signature
+from vision.validatornode.database.access import read_validator_node_signature
 
 
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_read_validator_node_signature_existent_correct(
         mock_get_session, database_session_maker, initialized_database_session,
         validator_node_signature):
@@ -30,7 +30,7 @@ def test_read_validator_node_signature_existent_correct(
 
 @pytest.mark.parametrize('validator_node_existent', [True, False])
 @pytest.mark.parametrize('transfer_existent', [True, False])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_read_validator_node_signature_nonexistent_correct(
         mock_get_session, database_session_maker, transfer_existent,
         validator_node_existent, initialized_database_session, transfer,

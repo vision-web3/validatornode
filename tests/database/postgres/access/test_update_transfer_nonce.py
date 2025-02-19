@@ -3,19 +3,19 @@ import unittest.mock
 import pytest
 import sqlalchemy
 import sqlalchemy.exc
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.access import update_transfer_nonce
-from pantos.validatornode.database.enums import TransferStatus
-from pantos.validatornode.database.models import Transfer
 from tests.database.utilities import modify_model_instance
+from vision.validatornode.database.access import update_transfer_nonce
+from vision.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.models import Transfer
 
 
 @pytest.mark.parametrize('transfer_status', [
     TransferStatus.DESTINATION_TRANSACTION_CONFIRMED,
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_CONFIRMED
 ])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_empty_database_correct(
         mock_get_session, database_session_maker, transfer_status,
         initialized_database_session, transfer):
@@ -48,7 +48,7 @@ def test_update_transfer_nonce_empty_database_correct(
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_FAILED,
     TransferStatus.DESTINATION_TRANSACTION_FAILED
 ], [None, 2, 0, 1, 3, 7, 4, 6, 5])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_failed_nonces_created_first(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -83,7 +83,7 @@ def test_update_transfer_nonce_with_failed_nonces_created_first(
     TransferStatus.DESTINATION_TRANSACTION_FAILED,
     TransferStatus.DESTINATION_TRANSACTION_FAILED
 ], [2, 0, 1, 3, None, 7, 4, 6, 5])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_failed_nonces_created_in_the_middle(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -113,7 +113,7 @@ def test_update_transfer_nonce_with_failed_nonces_created_in_the_middle(
     TransferStatus.DESTINATION_TRANSACTION_FAILED,
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_FAILED
 ], [0, 1, None, None, None])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_failed_transfers_with_empty_nonces(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -143,7 +143,7 @@ def test_update_transfer_nonce_failed_transfers_with_empty_nonces(
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_FAILED,
     TransferStatus.DESTINATION_TRANSACTION_FAILED
 ], [2, 0, 1, 3, 7, 4, 6, 5, None])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_failed_nonces_created_last(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -173,7 +173,7 @@ def test_update_transfer_nonce_with_failed_nonces_created_last(
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_CONFIRMED,
     TransferStatus.DESTINATION_TRANSACTION_CONFIRMED
 ], [0, 1, 2, 3, None])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_success_nonces_greater_nonce_received(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -198,7 +198,7 @@ def test_update_transfer_nonce_with_success_nonces_greater_nonce_received(
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_CONFIRMED,
     TransferStatus.DESTINATION_TRANSACTION_FAILED
 ], [0, 1, 2, 3, None])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_success_nonces_smaller_nonce_received(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):
@@ -223,7 +223,7 @@ def test_update_transfer_nonce_with_success_nonces_smaller_nonce_received(
     TransferStatus.SOURCE_REVERSAL_TRANSACTION_CONFIRMED,
     TransferStatus.DESTINATION_TRANSACTION_FAILED
 ], [0, 1, 2, 3, None])])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_nonce_with_success_nonces_equal_nonce_received(
         mock_get_session, database_session_maker, initialized_database_session,
         transfer, destination_blockchains, statuses, nonces):

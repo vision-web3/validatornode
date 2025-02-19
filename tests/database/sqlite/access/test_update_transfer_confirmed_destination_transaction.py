@@ -1,12 +1,12 @@
 import unittest.mock
 
-from pantos.validatornode.database.access import \
-    update_transfer_confirmed_destination_transaction
 from tests.database.utilities import modify_model_instance
+from vision.validatornode.database.access import \
+    update_transfer_confirmed_destination_transaction
 
 
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_update_transfer_destination_transaction_correct(
         mock_get_session, mock_get_session_maker,
         initialized_database_session_maker, transfer,

@@ -1,15 +1,15 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.access import update_reversal_transfer
 from tests.database.utilities import modify_model_instance
+from vision.validatornode.database.access import update_reversal_transfer
 
 
 @pytest.mark.parametrize('destination_token_contract_existent', [True, False])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_update_reversal_transfer_correct(
         mock_get_session, mock_get_session_maker,
         destination_token_contract_existent,

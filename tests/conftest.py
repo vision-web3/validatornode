@@ -2,10 +2,10 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.protocol import get_supported_protocol_versions
+from vision.validatornode.protocol import get_supported_protocol_versions
 
-with unittest.mock.patch('pantos.validatornode.configuration.config'):
-    import pantos.validatornode.celery  # noqa: F401
+with unittest.mock.patch('vision.validatornode.configuration.config'):
+    import vision.validatornode.celery  # noqa: F401
 
 
 @pytest.fixture(scope="session")
