@@ -62,6 +62,9 @@ jobs:
             tuf-repo-cdn.sigstore.dev:443
             
       - uses: actions/checkout@v4
+        with:
+          # TODO: Remove after going open sourced
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
