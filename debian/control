@@ -5,7 +5,6 @@ Maintainer: Vision GmbH <contact@vision.io>
 Build-Depends: debhelper-compat (= 12), python3, python3-dev, dh-virtualenv (>= 1.1), python3-venv, tar, dh-sysuser, dh-exec
 Standards-Version: 3.9.5
 Homepage: https://github.com/vision-web3-foundation/validatornode
-
 Package: vision-validator-node
 Architecture: all
 Pre-Depends: dpkg (>= 1.16.1), python3, python3-venv, ${misc:Pre-Depends}
