@@ -3,11 +3,11 @@ import sys
 import pytest
 import sqlalchemy
 import sqlalchemy.exc
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.enums import TransferStatus
-from pantos.validatornode.database.models import Base
 from tests.database.utilities import modify_model_instance
+from vision.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.models import Base
 
 _UNKNOWN_BLOCKCHAIN_ID = max(Blockchain).value + 1
 

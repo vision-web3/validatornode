@@ -2,18 +2,18 @@ import itertools
 
 import pytest
 import sqlalchemy
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.enums import TransferStatus
-from pantos.validatornode.database.models import Blockchain as Blockchain_
-from pantos.validatornode.database.models import ForwarderContract
-from pantos.validatornode.database.models import HubContract
-from pantos.validatornode.database.models import TokenContract
-from pantos.validatornode.database.models import Transfer
-from pantos.validatornode.database.models import \
+from vision.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.models import Blockchain as Blockchain_
+from vision.validatornode.database.models import ForwarderContract
+from vision.validatornode.database.models import HubContract
+from vision.validatornode.database.models import TokenContract
+from vision.validatornode.database.models import Transfer
+from vision.validatornode.database.models import \
     TransferStatus as TransferStatus_
-from pantos.validatornode.database.models import ValidatorNode
-from pantos.validatornode.database.models import ValidatorNodeSignature
+from vision.validatornode.database.models import ValidatorNode
+from vision.validatornode.database.models import ValidatorNodeSignature
 
 _HUB_CONTRACT_ADDRESSES = [
     '0x266323B9bdE14d2A4Af543A51394AC3c727136CD',

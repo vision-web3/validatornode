@@ -4,14 +4,14 @@ import tempfile
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.configuration import Config
-from pantos.common.configuration import ConfigError
+from vision.common.blockchains.enums import Blockchain
+from vision.common.configuration import Config
+from vision.common.configuration import ConfigError
 
-from pantos.validatornode.configuration import get_blockchain_config
-from pantos.validatornode.configuration import get_blockchains_rpc_nodes
-from pantos.validatornode.configuration import load_config
-from pantos.validatornode.protocol import get_latest_protocol_version
+from vision.validatornode.configuration import get_blockchain_config
+from vision.validatornode.configuration import get_blockchains_rpc_nodes
+from vision.validatornode.configuration import load_config
+from vision.validatornode.protocol import get_latest_protocol_version
 
 _CONFIGURATION_PROTOCOL = f'''
 protocol: {str(get_latest_protocol_version())}
@@ -87,7 +87,7 @@ _CONFIGURATION_BLOCKCHAIN = '''
         chain_id: 1
         hub: ''
         forwarder: ''
-        pan_token: ''
+        vsn_token: ''
         from_block: 0
         outgoing_transfers_number_blocks: 2000
         confirmations: 12
@@ -116,7 +116,7 @@ _CONFIGURATION = ''.join(_CONFIGURATION_SECTIONS)
                          [blockchain for blockchain in Blockchain])
 def test_get_blockchain_config_correct(blockchain):
     mocked_config = Config('')
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              mocked_config):
         with _prepare_config_file(_CONFIGURATION) as config_file_path:
             load_config(file_path=config_file_path, reload=False)
@@ -131,7 +131,7 @@ def test_get_blockchain_config_correct(blockchain):
 @pytest.mark.parametrize('reload_config', [True, False])
 def test_load_config_correct(reload_config):
     mocked_config = Config('')
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              mocked_config):
         with _prepare_config_file(_CONFIGURATION) as config_file_path:
             assert not mocked_config.is_loaded()
@@ -145,7 +145,7 @@ def test_load_config_error(removed_config_section):
     config_sections = _CONFIGURATION_SECTIONS.copy()
     del config_sections[removed_config_section]
     config = ''.join(config_sections)
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              Config('')):
         with _prepare_config_file(config) as config_file_path:
             with pytest.raises(ConfigError):
@@ -154,7 +154,7 @@ def test_load_config_error(removed_config_section):
 
 def test_get_blockchain_rpc_nodes_no_active_blockchains_correct():
     mocked_config = Config('')
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              mocked_config):
         with _prepare_config_file(_CONFIGURATION) as config_file_path:
             load_config(file_path=config_file_path, reload=False)
@@ -170,7 +170,7 @@ def test_get_blockchain_rpc_nodes_correct():
         for blockchain in Blockchain
     }
     mocked_config = Config('')
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              mocked_config):
         with _prepare_config_file(_CONFIGURATION) as config_file_path:
             load_config(file_path=config_file_path, reload=False)
@@ -184,7 +184,7 @@ def test_get_blockchain_rpc_nodes_with_fallback_providers_correct():
         for blockchain in Blockchain
     }
     mocked_config = Config('')
-    with unittest.mock.patch('pantos.validatornode.configuration.config',
+    with unittest.mock.patch('vision.validatornode.configuration.config',
                              mocked_config):
         with _prepare_config_file(_CONFIGURATION) as config_file_path:
             load_config(file_path=config_file_path, reload=False)

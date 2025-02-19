@@ -2,10 +2,10 @@ import dataclasses
 
 import pytest
 import web3
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.types import BlockchainAddress
+from vision.common.blockchains.enums import Blockchain
+from vision.common.types import BlockchainAddress
 
-from pantos.validatornode.entities import CrossChainTransfer
+from vision.validatornode.entities import CrossChainTransfer
 
 
 def _to_blockchain_address(integer):

@@ -3,17 +3,17 @@ import unittest.mock
 
 import pytest
 import sqlalchemy
-from pantos.common.blockchains.enums import Blockchain
-from pantos.common.types import BlockchainAddress
+from vision.common.blockchains.enums import Blockchain
+from vision.common.types import BlockchainAddress
 
-from pantos.validatornode.database.access import \
+from vision.validatornode.database.access import \
     create_validator_node_signature
-from pantos.validatornode.database.models import ValidatorNodeSignature
+from vision.validatornode.database.models import ValidatorNodeSignature
 
 
 @pytest.mark.parametrize('validator_node_existent', [True, False])
 @pytest.mark.parametrize('forwarder_contract_existent', [True, False])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_create_validator_node_signature_correct(
         mock_get_session, database_session_maker, forwarder_contract_existent,
         validator_node_existent, initialized_database_session, transfer,

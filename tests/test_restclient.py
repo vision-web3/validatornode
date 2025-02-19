@@ -2,16 +2,16 @@ import unittest.mock
 
 import pytest
 import requests
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.restclient import _TRANSFER_SIGNATURE_RESOURCE
-from pantos.validatornode.restclient import _VALIDATOR_NONCE_RESOURCE
-from pantos.validatornode.restclient import PrimaryNodeClient
-from pantos.validatornode.restclient import PrimaryNodeClientError
-from pantos.validatornode.restclient import PrimaryNodeDuplicateSignatureError
-from pantos.validatornode.restclient import PrimaryNodeInvalidSignatureError
-from pantos.validatornode.restclient import PrimaryNodeInvalidSignerError
-from pantos.validatornode.restclient import PrimaryNodeUnknownTransferError
+from vision.validatornode.restclient import _TRANSFER_SIGNATURE_RESOURCE
+from vision.validatornode.restclient import _VALIDATOR_NONCE_RESOURCE
+from vision.validatornode.restclient import PrimaryNodeClient
+from vision.validatornode.restclient import PrimaryNodeClientError
+from vision.validatornode.restclient import PrimaryNodeDuplicateSignatureError
+from vision.validatornode.restclient import PrimaryNodeInvalidSignatureError
+from vision.validatornode.restclient import PrimaryNodeInvalidSignerError
+from vision.validatornode.restclient import PrimaryNodeUnknownTransferError
 
 _PRIMARY_NODE_URL = 'https://some.url'
 
@@ -56,7 +56,7 @@ def test_init_correct(with_trailing_slash):
     assert url == url_with_trailing_slash
 
 
-@unittest.mock.patch('pantos.validatornode.restclient.requests.get')
+@unittest.mock.patch('vision.validatornode.restclient.requests.get')
 def test_get_validator_nonce_correct(mock_requests_get, primary_node_client,
                                      validator_nonce_get_request):
     mock_requests_get().status_code = requests.codes.ok
@@ -74,7 +74,7 @@ def test_get_validator_nonce_correct(mock_requests_get, primary_node_client,
 
 @pytest.mark.parametrize('send_error',
                          [requests.Timeout, requests.RequestException])
-@unittest.mock.patch('pantos.validatornode.restclient.requests.get')
+@unittest.mock.patch('vision.validatornode.restclient.requests.get')
 def test_get_validator_nonce_send_error(mock_requests_get, send_error,
                                         primary_node_client,
                                         validator_nonce_get_request):
@@ -87,7 +87,7 @@ def test_get_validator_nonce_send_error(mock_requests_get, send_error,
     assert isinstance(exception_info.value.__context__, send_error)
 
 
-@unittest.mock.patch('pantos.validatornode.restclient.requests.get')
+@unittest.mock.patch('vision.validatornode.restclient.requests.get')
 def test_get_validator_nonce_decode_error(mock_requests_get,
                                           primary_node_client,
                                           validator_nonce_get_request):
@@ -109,7 +109,7 @@ def test_get_validator_nonce_decode_error(mock_requests_get,
      (requests.codes.not_found, 'Unknown transfer.',
       PrimaryNodeUnknownTransferError),
      (requests.codes.internal_server_error, None, PrimaryNodeClientError)])
-@unittest.mock.patch('pantos.validatornode.restclient.requests.get')
+@unittest.mock.patch('vision.validatornode.restclient.requests.get')
 def test_get_validator_nonce_primary_node_error(mock_requests_get,
                                                 primary_node_error,
                                                 primary_node_client,
@@ -127,7 +127,7 @@ def test_get_validator_nonce_primary_node_error(mock_requests_get,
             primary_node_error[1])
 
 
-@unittest.mock.patch('pantos.validatornode.restclient.requests.post')
+@unittest.mock.patch('vision.validatornode.restclient.requests.post')
 def test_post_transfer_signature_correct(mock_requests_post,
                                          primary_node_client,
                                          transfer_signature_post_request):
@@ -142,7 +142,7 @@ def test_post_transfer_signature_correct(mock_requests_post,
 
 @pytest.mark.parametrize('send_error',
                          [requests.Timeout, requests.RequestException])
-@unittest.mock.patch('pantos.validatornode.restclient.requests.post')
+@unittest.mock.patch('vision.validatornode.restclient.requests.post')
 def test_post_transfer_signature_send_error(mock_requests_post, send_error,
                                             primary_node_client,
                                             transfer_signature_post_request):
@@ -156,7 +156,7 @@ def test_post_transfer_signature_send_error(mock_requests_post, send_error,
     assert isinstance(exception_info.value.__context__, send_error)
 
 
-@unittest.mock.patch('pantos.validatornode.restclient.requests.post')
+@unittest.mock.patch('vision.validatornode.restclient.requests.post')
 def test_post_transfer_signature_decode_error(mock_requests_post,
                                               primary_node_client,
                                               transfer_signature_post_request):
@@ -185,7 +185,7 @@ def test_post_transfer_signature_decode_error(mock_requests_post,
      (requests.codes.not_found, 'Unknown transfer.',
       PrimaryNodeUnknownTransferError),
      (requests.codes.internal_server_error, None, PrimaryNodeClientError)])
-@unittest.mock.patch('pantos.validatornode.restclient.requests.post')
+@unittest.mock.patch('vision.validatornode.restclient.requests.post')
 def test_post_transfer_signature_primary_node_error(
         mock_requests_post, primary_node_error, primary_node_client,
         transfer_signature_post_request):

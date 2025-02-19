@@ -2,10 +2,10 @@ import contextlib
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.business.transfers import TransferInteractor
-from pantos.validatornode.monitor import run_monitor
+from vision.validatornode.business.transfers import TransferInteractor
+from vision.validatornode.monitor import run_monitor
 
 _INACTIVE_BLOCKCHAINS = [Blockchain.SONIC, Blockchain.SOLANA]
 
@@ -61,10 +61,10 @@ def _mock_get_blockchain_config(blockchain):
 @pytest.mark.parametrize('detect_new_transfers_error', [True, False])
 @unittest.mock.patch.object(TransferInteractor, 'detect_new_transfers')
 @unittest.mock.patch('time.sleep', side_effect=_Break)
-@unittest.mock.patch('pantos.validatornode.monitor.get_blockchain_config',
+@unittest.mock.patch('vision.validatornode.monitor.get_blockchain_config',
                      _mock_get_blockchain_config)
 @unittest.mock.patch(
-    'pantos.validatornode.monitor.config',
+    'vision.validatornode.monitor.config',
     {'monitor': {
         'interval': _INTERVAL,
         'number_threads': _NUMBER_THREADS

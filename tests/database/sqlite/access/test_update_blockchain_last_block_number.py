@@ -1,16 +1,16 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.access import \
+from vision.validatornode.database.access import \
     update_blockchain_last_block_number
-from pantos.validatornode.database.exceptions import DatabaseError
+from vision.validatornode.database.exceptions import DatabaseError
 
 
 @pytest.mark.parametrize('new_last_block_number', [586258, 818775])
 @pytest.mark.parametrize('old_last_block_number', [316623, 586258])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_blockchain_last_block_number_correct(
         mock_get_session, database_session_maker, old_last_block_number,
         new_last_block_number, database_session, blockchain):
@@ -24,7 +24,7 @@ def test_update_blockchain_last_block_number_correct(
     assert blockchain.last_block_number == new_last_block_number
 
 
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_blockchain_last_block_number_database_error(
         mock_get_session, database_session_maker, database_session,
         blockchain):

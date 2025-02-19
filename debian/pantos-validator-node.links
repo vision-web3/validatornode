@@ -1,2 +1,0 @@
-opt/pantos/pantos-validator-node/bin/pantos-validator-node-server usr/bin/pantos-validator-node-server
-opt/pantos/pantos-validator-node/bin/pantos-validator-node-celery usr/bin/pantos-validator-node-celery

@@ -2,13 +2,13 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.database.access import update_transfer_status
-from pantos.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.access import update_transfer_status
+from vision.validatornode.database.enums import TransferStatus
 
 
 @pytest.mark.parametrize('new_transfer_status', TransferStatus)
 @pytest.mark.parametrize('old_transfer_status', TransferStatus)
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_update_transfer_status_correct(
         mock_get_session, database_session_maker, old_transfer_status,
         new_transfer_status, initialized_database_session, transfer):

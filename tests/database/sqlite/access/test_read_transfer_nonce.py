@@ -2,11 +2,11 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.database.access import read_transfer_nonce
+from vision.validatornode.database.access import read_transfer_nonce
 
 
 @pytest.mark.parametrize('nonce', [888643, 4094])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_read_transfer_nonce_correct(mock_get_session, database_session_maker,
                                      nonce, initialized_database_session,
                                      transfer):

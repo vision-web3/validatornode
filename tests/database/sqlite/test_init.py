@@ -4,15 +4,15 @@ import unittest.mock
 import pytest
 import sqlalchemy.exc
 import sqlalchemy.orm
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database import get_session
-from pantos.validatornode.database import get_session_maker
-from pantos.validatornode.database import initialize_package
-from pantos.validatornode.database.enums import TransferStatus
-from pantos.validatornode.database.exceptions import DatabaseError
-from pantos.validatornode.database.models import Blockchain as Blockchain_
-from pantos.validatornode.database.models import \
+from vision.validatornode.database import get_session
+from vision.validatornode.database import get_session_maker
+from vision.validatornode.database import initialize_package
+from vision.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.exceptions import DatabaseError
+from vision.validatornode.database.models import Blockchain as Blockchain_
+from vision.validatornode.database.models import \
     TransferStatus as TransferStatus_
 
 _DATABASE_CONFIG = {
@@ -28,7 +28,7 @@ _DATABASE_CONFIG = {
 
 
 def test_get_session_maker_correct(database_session_maker):
-    with unittest.mock.patch('pantos.validatornode.database._session_maker',
+    with unittest.mock.patch('vision.validatornode.database._session_maker',
                              database_session_maker):
         assert get_session_maker() == database_session_maker
 
@@ -39,7 +39,7 @@ def test_get_session_maker_database_error():
 
 
 def test_get_session_correct(database_session_maker):
-    with unittest.mock.patch('pantos.validatornode.database._session_maker',
+    with unittest.mock.patch('vision.validatornode.database._session_maker',
                              database_session_maker):
         assert isinstance(get_session(), sqlalchemy.orm.Session)
 
@@ -58,8 +58,8 @@ def test_get_session_database_error():
     'existing_blockchains',
     itertools.chain.from_iterable(
         itertools.combinations(Blockchain, r) for r in range(2)))
-@unittest.mock.patch('pantos.validatornode.database.config', _DATABASE_CONFIG)
-@unittest.mock.patch('pantos.validatornode.database.sqlalchemy.create_engine')
+@unittest.mock.patch('vision.validatornode.database.config', _DATABASE_CONFIG)
+@unittest.mock.patch('vision.validatornode.database.sqlalchemy.create_engine')
 @unittest.mock.patch('alembic.command.upgrade')
 @unittest.mock.patch('alembic.config.Config')
 def test_initialize_package_correct(mock_config, mock_upgrade,

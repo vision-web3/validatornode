@@ -1,14 +1,14 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.access import TransferToDataResponse
-from pantos.validatornode.database.access import read_transfer_to_data
+from vision.validatornode.database.access import TransferToDataResponse
+from vision.validatornode.database.access import read_transfer_to_data
 
 
 @pytest.mark.parametrize('number_transfers', [0, 1, 2])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_read_transfer_to_data_correct(
         mock_get_session, database_session_maker, number_transfers,
         initialized_database_session, source_token_contract,

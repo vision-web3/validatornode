@@ -2,16 +2,16 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.database.access import \
-    update_transfer_submitted_destination_transaction
 from tests.database.utilities import modify_model_instance
+from vision.validatornode.database.access import \
+    update_transfer_submitted_destination_transaction
 
 
 @pytest.mark.parametrize('destination_forwarder_contract_existent',
                          [True, False])
 @pytest.mark.parametrize('destination_hub_contract_existent', [True, False])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
-@unittest.mock.patch('pantos.validatornode.database.access.get_session')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session')
 def test_update_transfer_submitted_destination_transaction_correct(
         mock_get_session, mock_get_session_maker,
         destination_hub_contract_existent,

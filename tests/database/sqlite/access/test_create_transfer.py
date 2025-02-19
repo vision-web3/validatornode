@@ -4,22 +4,22 @@ import unittest.mock
 import pytest
 import sqlalchemy
 import sqlalchemy.exc
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.database.access import TransferCreationRequest
-from pantos.validatornode.database.access import create_transfer
-from pantos.validatornode.database.enums import TransferStatus
-from pantos.validatornode.database.exceptions import \
+from vision.validatornode.database.access import TransferCreationRequest
+from vision.validatornode.database.access import create_transfer
+from vision.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.exceptions import \
     ValidatorNonceNotUniqueError
-from pantos.validatornode.database.models import \
+from vision.validatornode.database.models import \
     UNIQUE_VALIDATOR_NONCE_CONSTRAINT
-from pantos.validatornode.database.models import Transfer
+from vision.validatornode.database.models import Transfer
 
 
 @pytest.mark.parametrize('source_hub_contract_existent', [True, False])
 @pytest.mark.parametrize('destination_token_contract_existent', [True, False])
 @pytest.mark.parametrize('source_token_contract_existent', [True, False])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_create_transfer_correct(
         mock_get_session_maker, database_session_maker,
         source_token_contract_existent, destination_token_contract_existent,
@@ -57,7 +57,7 @@ def test_create_transfer_correct(
     (sqlalchemy.exc.IntegrityError('', None,
                                    Exception()), sqlalchemy.exc.IntegrityError)
 ])
-@unittest.mock.patch('pantos.validatornode.database.access.get_session_maker')
+@unittest.mock.patch('vision.validatornode.database.access.get_session_maker')
 def test_create_transfer_error(mock_get_session_maker, error, transfer):
     mock_get_session_maker().begin().__enter__().execute.side_effect = error[0]
 

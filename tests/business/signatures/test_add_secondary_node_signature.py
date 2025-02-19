@@ -2,14 +2,14 @@ import unittest.mock
 
 import pytest
 
-from pantos.validatornode.blockchains.base import BlockchainClientError
-from pantos.validatornode.business.base import DuplicateSignatureError
-from pantos.validatornode.business.base import InvalidSignatureError
-from pantos.validatornode.business.base import InvalidSignerError
-from pantos.validatornode.business.base import UnknownTransferError
-from pantos.validatornode.business.signatures import SignatureInteractor
-from pantos.validatornode.business.signatures import SignatureInteractorError
-from pantos.validatornode.database.access import TransferToDataResponse
+from vision.validatornode.blockchains.base import BlockchainClientError
+from vision.validatornode.business.base import DuplicateSignatureError
+from vision.validatornode.business.base import InvalidSignatureError
+from vision.validatornode.business.base import InvalidSignerError
+from vision.validatornode.business.base import UnknownTransferError
+from vision.validatornode.business.signatures import SignatureInteractor
+from vision.validatornode.business.signatures import SignatureInteractorError
+from vision.validatornode.database.access import TransferToDataResponse
 
 _FORWARDER_ADDRESS = '0x8960647eC8CAd5fEBc919b255C9F739f17D91e8B'
 
@@ -50,12 +50,12 @@ def transfer_to_data_response(internal_transfer_id, destination_blockchain,
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_config',
+    'vision.validatornode.business.signatures.get_blockchain_config',
     return_value={'forwarder': _FORWARDER_ADDRESS})
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_client')
+    'vision.validatornode.business.signatures.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_correct(
         mock_database_access, mock_get_blockchain_client,
         mock_get_blockchain_config, transfer_to_data_response,
@@ -80,7 +80,7 @@ def test_add_secondary_node_signature_correct(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_unknown_transfer_error(
         mock_database_access, secondary_node_signature_add_request,
         signature_interactor):
@@ -97,12 +97,12 @@ def test_add_secondary_node_signature_unknown_transfer_error(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_config',
+    'vision.validatornode.business.signatures.get_blockchain_config',
     return_value={'forwarder': _FORWARDER_ADDRESS})
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_client')
+    'vision.validatornode.business.signatures.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_invalid_signature_error(
         mock_database_access, mock_get_blockchain_client,
         mock_get_blockchain_config, transfer_to_data_response,
@@ -123,12 +123,12 @@ def test_add_secondary_node_signature_invalid_signature_error(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_config',
+    'vision.validatornode.business.signatures.get_blockchain_config',
     return_value={'forwarder': _FORWARDER_ADDRESS})
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_client')
+    'vision.validatornode.business.signatures.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_duplicate_signature_error(
         mock_database_access, mock_get_blockchain_client,
         mock_get_blockchain_config, transfer_to_data_response,
@@ -151,12 +151,12 @@ def test_add_secondary_node_signature_duplicate_signature_error(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_config',
+    'vision.validatornode.business.signatures.get_blockchain_config',
     return_value={'forwarder': _FORWARDER_ADDRESS})
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.get_blockchain_client')
+    'vision.validatornode.business.signatures.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_invalid_signer_error(
         mock_database_access, mock_get_blockchain_client,
         mock_get_blockchain_config, transfer_to_data_response,
@@ -180,7 +180,7 @@ def test_add_secondary_node_signature_invalid_signer_error(
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.signatures.database_access')
+    'vision.validatornode.business.signatures.database_access')
 def test_add_secondary_node_signature_database_error(
         mock_database_access, secondary_node_signature_add_request,
         signature_interactor):

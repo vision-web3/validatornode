@@ -12,7 +12,7 @@ build/
 dist/
 /local/
 debian/.debhelper
-debian/pantos-validator-node
+debian/vision-validator-node
 debian/tmp
 debian/*debhelper*
 debian/files

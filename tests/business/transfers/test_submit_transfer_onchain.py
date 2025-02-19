@@ -4,16 +4,16 @@ import uuid
 import celery.exceptions  # type: ignore
 import pytest
 
-from pantos.validatornode.blockchains.base import BlockchainClient
-from pantos.validatornode.blockchains.base import BlockchainClientError
-from pantos.validatornode.blockchains.base import NonMatchingForwarderError
-from pantos.validatornode.blockchains.base import \
+from vision.validatornode.blockchains.base import BlockchainClient
+from vision.validatornode.blockchains.base import BlockchainClientError
+from vision.validatornode.blockchains.base import NonMatchingForwarderError
+from vision.validatornode.blockchains.base import \
     SourceTransferIdAlreadyUsedError
-from pantos.validatornode.business.transfers import TransferInteractor
-from pantos.validatornode.business.transfers import TransferInteractorError
-from pantos.validatornode.business.transfers import \
+from vision.validatornode.business.transfers import TransferInteractor
+from vision.validatornode.business.transfers import TransferInteractorError
+from vision.validatornode.business.transfers import \
     submit_transfer_onchain_task
-from pantos.validatornode.database.enums import TransferStatus
+from vision.validatornode.database.enums import TransferStatus
 
 _INTERNAL_TRANSACTION_ID = uuid.uuid4()
 
@@ -24,20 +24,20 @@ _TASK_INTERVAL = 120
 @pytest.mark.parametrize('primary_node_signature_in_database', [True, False])
 @pytest.mark.parametrize('is_reversal_transfer', [True, False])
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.confirm_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.confirm_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
-@unittest.mock.patch('pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.get_blockchain_config')
+@unittest.mock.patch('vision.validatornode.business.transfers.config', {
     'tasks': {
         'confirm_transfer': {
             'retry_interval_in_seconds': _TASK_INTERVAL
         }
     }
 })
-@unittest.mock.patch('pantos.validatornode.business.base.config',
+@unittest.mock.patch('vision.validatornode.business.base.config',
                      {'application': {
                          'mode': 'primary'
                      }})
@@ -120,13 +120,13 @@ def test_submit_transfer_onchain_sufficient_signatures_correct(
 @pytest.mark.parametrize('available_validator_node_signatures', range(1, 3))
 @pytest.mark.parametrize('is_reversal_transfer', [True, False])
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.confirm_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.confirm_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
-@unittest.mock.patch('pantos.validatornode.business.base.config',
+    'vision.validatornode.business.transfers.get_blockchain_config')
+@unittest.mock.patch('vision.validatornode.business.base.config',
                      {'application': {
                          'mode': 'primary'
                      }})
@@ -198,13 +198,13 @@ def test_submit_transfer_onchain_insufficient_signatures_correct(
 @unittest.mock.patch.object(TransferInteractor,
                             '_TransferInteractor__add_primary_node_signature')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.confirm_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.confirm_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
-@unittest.mock.patch('pantos.validatornode.business.base.config',
+    'vision.validatornode.business.transfers.get_blockchain_config')
+@unittest.mock.patch('vision.validatornode.business.base.config',
                      {'application': {
                          'mode': 'primary'
                      }})
@@ -256,13 +256,13 @@ def test_submit_transfer_onchain_permanent_on_chain_verification_error_correct(
 @unittest.mock.patch.object(TransferInteractor,
                             '_TransferInteractor__add_primary_node_signature')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.confirm_transfer_task')
-@unittest.mock.patch('pantos.validatornode.business.transfers.database_access')
+    'vision.validatornode.business.transfers.confirm_transfer_task')
+@unittest.mock.patch('vision.validatornode.business.transfers.database_access')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_client')
+    'vision.validatornode.business.transfers.get_blockchain_client')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.get_blockchain_config')
-@unittest.mock.patch('pantos.validatornode.business.base.config',
+    'vision.validatornode.business.transfers.get_blockchain_config')
+@unittest.mock.patch('vision.validatornode.business.base.config',
                      {'application': {
                          'mode': 'primary'
                      }})
@@ -308,17 +308,17 @@ def test_submit_transfer_onchain_transfer_to_error(
     mock_confirm_transfer_task.apply_async.assert_not_called()
 
 
-@unittest.mock.patch('pantos.validatornode.business.transfers.'
+@unittest.mock.patch('vision.validatornode.business.transfers.'
                      'submit_transfer_to_primary_node_task')
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'submit_transfer_to_primary_node': {
                 'retry_interval_in_seconds': _TASK_INTERVAL
             },
         }
     })
-@unittest.mock.patch('pantos.validatornode.business.base.config',
+@unittest.mock.patch('vision.validatornode.business.base.config',
                      {'application': {
                          'mode': 'secondary'
                      }})
@@ -340,7 +340,7 @@ def test_submit_transfer_onchain_as_secondary_node(
 
 @pytest.mark.parametrize('submission_completed', [True, False])
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'submit_transfer_onchain': {
                 'retry_interval_in_seconds': _TASK_INTERVAL
@@ -348,7 +348,7 @@ def test_submit_transfer_onchain_as_secondary_node(
         }
     })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_submit_transfer_onchain_task_correct(mock_transfer_interactor,
                                               submission_completed,
                                               internal_transfer_id,
@@ -368,7 +368,7 @@ def test_submit_transfer_onchain_task_correct(mock_transfer_interactor,
 
 
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.config', {
+    'vision.validatornode.business.transfers.config', {
         'tasks': {
             'submit_transfer_onchain': {
                 'retry_interval_after_error_in_seconds': _TASK_INTERVAL
@@ -376,7 +376,7 @@ def test_submit_transfer_onchain_task_correct(mock_transfer_interactor,
         }
     })
 @unittest.mock.patch(
-    'pantos.validatornode.business.transfers.TransferInteractor')
+    'vision.validatornode.business.transfers.TransferInteractor')
 def test_submit_transfer_onchain_task_error(mock_transfer_interactor,
                                             internal_transfer_id,
                                             cross_chain_transfer,

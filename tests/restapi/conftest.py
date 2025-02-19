@@ -1,7 +1,7 @@
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.restapi import flask_app
+from vision.validatornode.restapi import flask_app
 
 _SOURCE_BLOCKCHAIN = Blockchain.AVALANCHE
 

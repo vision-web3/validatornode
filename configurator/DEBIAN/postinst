@@ -5,8 +5,8 @@
 
 set -e
 #set -x  # Enable debugging
-APP_ID="pantos-validator-node"
-RUN_AS="pantos-validator-node"
+APP_ID="vision-validator-node"
+RUN_AS="vision-validator-node"
 
 . "/etc/default/$APP_ID"
 
@@ -26,8 +26,8 @@ RUN_AS="pantos-validator-node"
 . /usr/share/debconf/confmodule
 
 # Directory and file paths
-application_directory='/opt/pantos/pantos-validator-node'
-base_directory='/etc/pantos'
+application_directory='/opt/vision/vision-validator-node'
+base_directory='/etc/vision'
 env_file="${base_directory}/validator-node-config.env"
 
 # User names
@@ -53,7 +53,7 @@ _install_env() {
 }
 
 _configure_postgresql() {
-  db_get pantos/common/configure_postgresql
+  db_get vision/common/configure_postgresql
   # If Postgresql doesn't exist, check for the configuration to exist and otherwise show a big warning
   if [ "$RET" != "false" ] && [ -n "$POSTGRESQL_INSTALLED" ]; then
     # Try to connect to the database and break otherwise
@@ -74,15 +74,15 @@ _configure_postgresql() {
           echo "${DPKG_MAINTSCRIPT_PACKAGE} PostgreSQL user '${postgresql_user}' already exists, generating new PostgreSQL password"
           postgresql_password=`< /dev/urandom tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1`
           su postgres -c "psql --quiet --command \"ALTER ROLE \\\"${postgresql_user}\\\" WITH PASSWORD '${postgresql_password}'\""
-          echo "DB_URL='postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/pantos-validator-node'" >> "${env_file}"
-          echo "CELERY_BACKEND='db+postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/pantos-validator-node-celery'" >> "${env_file}"
+          echo "DB_URL='postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/vision-validator-node'" >> "${env_file}"
+          echo "CELERY_BACKEND='db+postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/vision-validator-node-celery'" >> "${env_file}"
           echo "${DPKG_MAINTSCRIPT_PACKAGE} PostgreSQL user '${postgresql_user}' password updated"
         else
           echo "${DPKG_MAINTSCRIPT_PACKAGE} PostgreSQL user '${postgresql_user}' does not exist, generating user and password"
           postgresql_password=`< /dev/urandom tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1`
           su postgres -c "psql --quiet --command \"CREATE ROLE \\\"${postgresql_user}\\\" WITH LOGIN PASSWORD '${postgresql_password}'\""
-          echo "DB_URL='postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/pantos-validator-node'" >> "${env_file}"
-          echo "CELERY_BACKEND='db+postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/pantos-validator-node-celery'" >> "${env_file}"
+          echo "DB_URL='postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/vision-validator-node'" >> "${env_file}"
+          echo "CELERY_BACKEND='db+postgresql+psycopg://${postgresql_user}:${postgresql_password}@localhost/vision-validator-node-celery'" >> "${env_file}"
           echo "${DPKG_MAINTSCRIPT_PACKAGE} PostgreSQL user '${postgresql_user}' created"
         fi
       fi
@@ -105,7 +105,7 @@ _configure_postgresql() {
 }
 
 _configure_rabbitmq() {
-  db_get pantos/common/configure_rabbitmq
+  db_get vision/common/configure_rabbitmq
   if [ "$RET" != "false" ] && [ -n "$RABBITMQ_INSTALLED" ]; then
     # Try to connect to the RabbitMQ server and break otherwise
     if ! timeout 10 rabbitmqctl list_users >/dev/null 2>&1; then
@@ -124,12 +124,12 @@ _configure_rabbitmq() {
           echo "${DPKG_MAINTSCRIPT_PACKAGE} RabbitMQ user '${rabbitmq_user}' already exists, generating new RabbitMQ password"
           rabbitmq_password=`< /dev/urandom tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1`
           rabbitmqctl change_password "${rabbitmq_user}" "${rabbitmq_password}"
-          echo "CELERY_BROKER='amqp://${rabbitmq_user}:${rabbitmq_password}@localhost:5672/pantos-validator-node'" >> "${env_file}"
+          echo "CELERY_BROKER='amqp://${rabbitmq_user}:${rabbitmq_password}@localhost:5672/vision-validator-node'" >> "${env_file}"
         else
           echo "${DPKG_MAINTSCRIPT_PACKAGE} RabbitMQ user does not exist, generating new RabbitMQ user and password"
           rabbitmq_password=`< /dev/urandom tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1`
           rabbitmqctl add_user "${rabbitmq_user}" "${rabbitmq_password}"
-          echo "CELERY_BROKER='amqp://${rabbitmq_user}:${rabbitmq_password}@localhost:5672/pantos-validator-node'" >> "${env_file}"
+          echo "CELERY_BROKER='amqp://${rabbitmq_user}:${rabbitmq_password}@localhost:5672/vision-validator-node'" >> "${env_file}"
         fi
       fi
       if rabbitmqctl list_vhosts | grep --quiet --word-regexp "^${virtual_host}$"; then
@@ -183,14 +183,14 @@ _wait_for_postgresql() {
   fi
 }
 
-SERVICES="pantos-validator-node-server pantos-validator-node-celery"
+SERVICES="vision-validator-node-server vision-validator-node-celery"
 
 _stop_services() {
   systemctl stop $SERVICES
 }
 
 _start_services() {
-  db_get pantos/common/start_services
+  db_get vision/common/start_services
   if [ $RET != "false" ] && _check_systemd_active; then
     echo "Starting services..."
     systemctl daemon-reload
@@ -226,11 +226,11 @@ esac
 #DEBHELPER#
 
 # Protect configuration files (containing passwords)
-chmod 0640 /etc/pantos/validator-node*
-chgrp daemon /etc/pantos/validator-node*
+chmod 0640 /etc/vision/validator-node*
+chgrp daemon /etc/vision/validator-node*
 
 # Data and log directory permissions
-chown -RPh "$RUN_AS":daemon /var/log/pantos/validator-node/. /opt/pantos/"$APP_ID"/.
+chown -RPh "$RUN_AS":daemon /var/log/vision/validator-node/. /opt/vision/"$APP_ID"/.
 
 # Run upgrade / start service AFTER permissions etc. are fixed
 if [ "$1" = "configure" ]; then
@@ -241,7 +241,7 @@ if [ "$1" = "configure" ]; then
     _wait_for_rabbitmq "$2"
     _configure_rabbitmq "$2"
     _start_services "$2"
-    db_input high pantos/configurator/finish_note || true
+    db_input high vision/configurator/finish_note || true
     db_go || true
 fi
 

@@ -1,10 +1,10 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.blockchains.avalanche import AvalancheClient
-from pantos.validatornode.blockchains.avalanche import AvalancheClientError
+from vision.validatornode.blockchains.avalanche import AvalancheClient
+from vision.validatornode.blockchains.avalanche import AvalancheClientError
 
 
 @pytest.fixture(scope='module')

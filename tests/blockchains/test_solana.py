@@ -1,10 +1,10 @@
 import unittest.mock
 
 import pytest
-from pantos.common.blockchains.enums import Blockchain
+from vision.common.blockchains.enums import Blockchain
 
-from pantos.validatornode.blockchains.solana import SolanaClient
-from pantos.validatornode.blockchains.solana import SolanaClientError
+from vision.validatornode.blockchains.solana import SolanaClient
+from vision.validatornode.blockchains.solana import SolanaClientError
 
 
 @pytest.fixture(scope='module')

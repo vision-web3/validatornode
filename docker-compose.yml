@@ -1,11 +1,11 @@
 networks:
-  pantos-validator-node:
-    name: pantos-validator-node-${STACK_IDENTIFIER}-${INSTANCE-1}
+  vision-validator-node:
+    name: vision-validator-node-${STACK_IDENTIFIER}-${INSTANCE-1}
     driver: overlay
     internal: true
     attachable: true
-  pantos-validator-node-primary:
-    name: pantos-validator-node-${STACK_IDENTIFIER}-primary
+  vision-validator-node-primary:
+    name: vision-validator-node-${STACK_IDENTIFIER}-primary
     driver: overlay
     attachable: true
 
@@ -17,37 +17,37 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    image: ${DOCKER_REGISTRY-pantosio}/validator-node-app:${DOCKER_TAG-local}
+    image: ${DOCKER_REGISTRY-vision}/validator-node-app:${DOCKER_TAG-local}
     build:
       context: .
       dockerfile: Dockerfile
       target: validatornode01
       x-bake:
         tags:
-          - ${DOCKER_REGISTRY-pantosio}/validator-node-app:${DOCKER_TAG-local}
-          - ${DOCKER_REGISTRY-pantosio}/validator-node-app:${EXTRA_TAG-local}
+          - ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-app:${DOCKER_TAG-local}
+          - ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-app:${EXTRA_TAG-local}
     networks:
-      pantos-validator-node:
-      pantos-validator-node-primary:
+      vision-validator-node:
+      vision-validator-node-primary:
         aliases:
-          - pantos-validator-node-${INSTANCE-1}
+          - vision-validator-node-${INSTANCE-1}
     env_file: []
     environment:
       # Ignore the env file inside the docker container
-      PANTOS_ENV_FILE: ' '
+      VISION_ENV_FILE: ' '
       APP_HOST: 0.0.0.0
       APP_PORT: 8080
       APP_MODE: ${APP_MODE-primary}
       APP_LOG_FILE_ENABLED: 'false'
       APP_LOG_FORMAT: human_readable
-      DB_URL: postgresql+psycopg://pantos-validator-node:pantos@db/pantos-validator-node
-      CELERY_BROKER: amqp://pantos-validator-node:pantos@broker:5672/pantos-validator-node
-      CELERY_BACKEND: db+postgresql+psycopg://pantos-validator-node:pantos@db/pantos-validator-node-celery
+      DB_URL: postgresql+psycopg://vision-validator-node:vision@db/vision-validator-node
+      CELERY_BROKER: amqp://vision-validator-node:vision@broker:5672/vision-validator-node
+      CELERY_BACKEND: db+postgresql+psycopg://vision-validator-node:vision@db/vision-validator-node-celery
       DEV_MODE: ${DEV_MODE}
     ports:
       - 809${INSTANCE-0}:8080
     healthcheck:
-      test: ["CMD", "/usr/bin/pantos-validator-node-server", "--status"]
+      test: ["CMD", "/usr/bin/vision-validator-node-server", "--status"]
       interval: 5s
       timeout: 10s
       retries: 3
@@ -60,20 +60,20 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./pantos
-          target: /opt/pantos/pantos-service-node/lib/python3.13/site-packages/pantos
+          path: ./vision
+          target: /opt/vision/vision-service-node/lib/python3.13/site-packages/vision
         - action: sync+restart
           path: ./linux/scripts/start-web.py
-          target: /opt/pantos/pantos-validator-node/bin/start-web.py
+          target: /opt/vision/vision-validator-node/bin/start-web.py
         - action: sync+restart
-          path: ./linux/scripts/pantos-validator-node-server
-          target: /opt/pantos/pantos-validator-node/bin/pantos-validator-node-server
+          path: ./linux/scripts/vision-validator-node-server
+          target: /opt/vision/vision-validator-node/bin/vision-validator-node-server
         - action: sync+restart
           path: validator-node-config.yml
-          target: /opt/pantos/pantos-validator-node/validator-node-config.yml
+          target: /opt/vision/vision-validator-node/validator-node-config.yml
         - action: sync+restart
           path: alembic.ini
-          target: /opt/pantos/pantos-validator-node/alembic.ini
+          target: /opt/vision/vision-validator-node/alembic.ini
         - action: sync+restart
           path: validator-node-config.env
           target: /root/validator-node-config.env
@@ -100,33 +100,33 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    image: ${DOCKER_REGISTRY-pantosio}/validator-node-worker:${DOCKER_TAG-local}
+    image: ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-worker:${DOCKER_TAG-local}
     build:
       context: .
       dockerfile: Dockerfile
       target: validatornode01-celery-worker
       x-bake:
         tags:
-          - ${DOCKER_REGISTRY-pantosio}/validator-node-worker:${DOCKER_TAG-local}
-          - ${DOCKER_REGISTRY-pantosio}/validator-node-worker:${EXTRA_TAG-local}
+          - ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-worker:${DOCKER_TAG-local}
+          - ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-worker:${EXTRA_TAG-local}
     networks:
-      pantos-validator-node:
+      vision-validator-node:
     env_file: []
     environment:
       # Ignore the env file inside the docker container
-      PANTOS_ENV_FILE: ' '
-      PANTOS_CELERY_AUTORESTART: 'true'
+      VISION_ENV_FILE: ' '
+      VISION_CELERY_AUTORESTART: 'true'
       APP_HOST: 0.0.0.0
       APP_PORT: 8080
       APP_MODE: ${APP_MODE-primary}
       CELERY_LOG_FORMAT: human_readable
       CELERY_LOG_FILE_ENABLED: 'false'
-      DB_URL: postgresql+psycopg://pantos-validator-node:pantos@db/pantos-validator-node
-      CELERY_BROKER: amqp://pantos-validator-node:pantos@broker:5672/pantos-validator-node
-      CELERY_BACKEND: db+postgresql+psycopg://pantos-validator-node:pantos@db/pantos-validator-node-celery
+      DB_URL: postgresql+psycopg://vision-validator-node:vision@db/vision-validator-node
+      CELERY_BROKER: amqp://vision-validator-node:vision@broker:5672/vision-validator-node
+      CELERY_BACKEND: db+postgresql+psycopg://vision-validator-node:vision@db/vision-validator-node-celery
       DEV_MODE: ${DEV_MODE}
     healthcheck:
-      test: ["CMD", "/usr/bin/pantos-validator-node-celery", "--status"]
+      test: ["CMD", "/usr/bin/vision-validator-node-celery", "--status"]
       interval: 5s
       timeout: 10s
       retries: 3
@@ -137,17 +137,17 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./pantos
-          target: /opt/pantos/pantos-validator-node/lib/python3.13/site-packages/pantos
+          path: ./vision
+          target: /opt/vision/vision-validator-node/lib/python3.13/site-packages/vision
         - action: sync+restart
-          path: ./linux/scripts/pantos-validator-node-celery
-          target: /opt/pantos/pantos-validator-node/bin/pantos-validator-node-celery
+          path: ./linux/scripts/vision-validator-node-celery
+          target: /opt/vision/vision-validator-node/bin/vision-validator-node-celery
         - action: sync+restart
           path: validator-node-config.yml
-          target: /opt/pantos/pantos-validator-node/validator-node-config.yml
+          target: /opt/vision/vision-validator-node/validator-node-config.yml
         - action: sync+restart
           path: alembic.ini
-          target: /opt/pantos/pantos-validator-node/alembic.ini
+          target: /opt/vision/vision-validator-node/alembic.ini
         - action: sync+restart
           path: validator-node-config.env
           target: /root/validator-node-config.env
@@ -181,7 +181,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      pantos-validator-node:
+      vision-validator-node:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -205,18 +205,18 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    hostname: pantos-validator-node
+    hostname: vision-validator-node
     networks:
-      pantos-validator-node:
+      vision-validator-node:
     healthcheck:
       test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 10s
       timeout: 5s
       retries: 5
     environment:
-      RABBITMQ_DEFAULT_USER: pantos-validator-node
-      RABBITMQ_DEFAULT_PASS: pantos
-      RABBITMQ_DEFAULT_VHOST: pantos-validator-node
+      RABBITMQ_DEFAULT_USER: vision-validator-node
+      RABBITMQ_DEFAULT_PASS: vision
+      RABBITMQ_DEFAULT_VHOST: vision-validator-node
     volumes:
       - rabbitmq_data:/rabbitmq_data
 
