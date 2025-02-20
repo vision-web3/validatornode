@@ -346,8 +346,8 @@ jobs:
 
       - name: Load images
         run: |
-          cat export/app.tar | docker import - visionio/validator-node-app:local
-          cat export/worker.tar | docker import - visionio/validator-node-worker:local
+          cat export/app.tar | docker import - visionweb3foundation/validator-node-app:local
+          cat export/worker.tar | docker import - visionweb3foundation/validator-node-worker:local
 
       - uses: vision-web3-foundation/e2e-testing/.github/actions/run-tests@main
         with:
