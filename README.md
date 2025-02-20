@@ -72,7 +72,7 @@ sudo apt install vision-validator-node
 
 #### Docker images
 
-We also distribute docker images in DockerHub with each release. These are made available under the visionio project as either [**app**](https://hub.docker.com/r/visionio/validator-node-app) or [**worker**](https://hub.docker.com/r/visionio/validator-node-worker).
+We also distribute docker images in DockerHub with each release. These are made available under the visionweb3foundation project as either [**app**](https://hub.docker.com/r/visionweb3foundation/validator-node-app) or [**worker**](https://hub.docker.com/r/visionweb3foundation/validator-node-worker).
 
 You can run a local setup with docker by doing the following steps:
 
