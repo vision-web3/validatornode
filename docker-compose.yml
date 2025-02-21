@@ -17,7 +17,7 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    image: ${DOCKER_REGISTRY-vision}/validator-node-app:${DOCKER_TAG-local}
+    image: ${DOCKER_REGISTRY-visionweb3foundation}/validator-node-app:${DOCKER_TAG-local}
     build:
       context: .
       dockerfile: Dockerfile
