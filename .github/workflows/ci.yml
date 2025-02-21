@@ -353,3 +353,4 @@ jobs:
         with:
           validatornode-path: ${{ env.VISION_VALIDATOR_NODE }}
           validatornode-version: 'local'
+          token: ${{ secrets.GH_TOKEN }}
