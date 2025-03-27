@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/vision-web3-foundation/validatornode/img/vision-logo-full.svg" alt="Vision logo" align="right" width="120" />
+<img src="https://raw.githubusercontent.com/vision-web3-foundation/validatornode/img/vision-logo.png" alt="Vision logo" align="right" width="120" />
 
 [![CI](https://github.com/vision-web3-foundation/validatornode/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vision-web3-foundation/validatornode/actions/workflows/ci.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vision-web3-foundation_validatornode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vision-web3-foundation_validatornode)
