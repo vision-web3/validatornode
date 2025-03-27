@@ -53,8 +53,6 @@ jobs:
         with:
           repository: vision-web3-foundation/ethereum-contracts
           path: ethereum-contracts
-          # !!!! Following line MUST be removed after opening
-          token: ${{ secrets.GH_TOKEN }}
           sparse-checkout: |
            Makefile
            docker-compose.yml
@@ -151,8 +149,6 @@ jobs:
         with:
           repository: vision-web3-foundation/ethereum-contracts
           path: ethereum-contracts
-          # !!!! Following line MUST be removed after opening
-          token: ${{ secrets.GH_TOKEN }}
           sparse-checkout: |
             Makefile
             docker-compose.yml
@@ -329,8 +325,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # !!!! Following line MUST be removed after opening
-          token: ${{ secrets.GH_TOKEN }}
           path: ${{ env.VISION_VALIDATOR_NODE }}
           sparse-checkout: |
             docker-compose.yml
@@ -353,4 +347,3 @@ jobs:
         with:
           validatornode-path: ${{ env.VISION_VALIDATOR_NODE }}
           validatornode-version: 'local'
-          token: ${{ secrets.GH_TOKEN }}
