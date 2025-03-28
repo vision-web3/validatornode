@@ -4,7 +4,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vision-web3-foundation_validatornode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vision-web3-foundation_validatornode)
 
 
-
 # Vision Validator Node (reference implementation)
 
 ## 1. Introduction
