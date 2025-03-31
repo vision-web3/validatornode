@@ -1,7 +1,7 @@
-<img src="https://raw.githubusercontent.com/vision-web3-foundation/validatornode/img/vision-logo.png" alt="Vision logo" align="right" width="120" />
+<img src="https://raw.githubusercontent.com/vision-web3/validatornode/img/vision-logo.png" alt="Vision logo" align="right" width="120" />
 
-[![CI](https://github.com/vision-web3-foundation/validatornode/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vision-web3-foundation/validatornode/actions/workflows/ci.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vision-web3-foundation_validatornode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vision-web3-foundation_validatornode)
+[![CI](https://github.com/vision-web3/validatornode/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vision-web3/validatornode/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vision-web3_validatornode&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vision-web3_validatornode)
 
 
 # Vision Validator Node (reference implementation)
@@ -58,20 +58,20 @@ There are two ways to install the apps using pre-built packages:
 
 #### Debian package distribution
 
-We provide Debian packages alongside every release, you can find them in the [releases tab](https://github.com/vision-web3-foundation/validatornode/releases). Further information on how to use the service node packages can be found [here](https://vision.gitbook.io/technical-documentation/general/validator-node).
+We provide Debian packages alongside every release, you can find them in the [releases tab](https://github.com/vision-web3/validatornode/releases). Further information on how to use the service node packages can be found [here](https://vision.gitbook.io/technical-documentation/general/validator-node).
 
 We have a PPA hosted on GitHub, which can be accessed as follows:
 
 ```bash
-curl -s --compressed "https://vision-web3-foundation.github.io/validatornode/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/validatornode.gpg >/dev/null
-sudo curl -s --compressed -o /etc/apt/sources.list.d/vision-validatornode.list "https://vision-web3-foundation.github.io/validatornode/vision-validatornode.list"
+curl -s --compressed "https://vision-web3.github.io/validatornode/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/validatornode.gpg >/dev/null
+sudo curl -s --compressed -o /etc/apt/sources.list.d/vision-validatornode.list "https://vision-web3.github.io/validatornode/vision-validatornode.list"
 sudo apt update
 sudo apt install vision-validator-node
 ```
 
 #### Docker images
 
-We also distribute docker images in DockerHub with each release. These are made available under the visionweb3foundation project as either [**app**](https://hub.docker.com/r/visionweb3foundation/validator-node-app) or [**worker**](https://hub.docker.com/r/visionweb3foundation/validator-node-worker).
+We also distribute docker images in DockerHub with each release. These are made available under the vsnw3 project as either [**app**](https://hub.docker.com/r/vsnw3/validator-node-app) or [**worker**](https://hub.docker.com/r/vsnw3/validator-node-worker).
 
 You can run a local setup with docker by doing the following steps:
 
