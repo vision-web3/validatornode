@@ -1,7 +1,7 @@
 Source: vision-validator-node-full
 Section: contrib/python
 Priority: extra
-Maintainer: Vision GmbH <contact@vision.io>
+Maintainer: Vision XXX <XXX@XXX>
 Standards-Version: 3.9.5
 Homepage: https://github.com/vision-web3/validatornode
 Package: vision-validator-node-full
