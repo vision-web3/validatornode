@@ -25,7 +25,7 @@ flake8 = "7.2.0"
 isort = "6.0.1"
 mypy = "1.0.1"
 # mypy = "1.0.1"
-types-pyyaml = "6.0.12.20241230"
+types-pyyaml = "6.0.12.20250402"
 types-requests = "2.32.0.20241016"
 yapf = "0.43.0"
 
