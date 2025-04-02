@@ -54,6 +54,7 @@ requests = "2.32.3"
 hexbytes = "1.2.1"
 flower = "^2.0.1"
 gunicorn = ">=22,<24"
+types-sqlalchemy = "^1.4.53.38"
 
 [build-system]
 requires = ["poetry-core"]
