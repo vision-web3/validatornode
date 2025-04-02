@@ -3820,15 +3820,15 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 
 [[package]]
 name = "vision-common"
-version = "0.1.0"
+version = "0.2.0"
 description = "Common code for Vision-web3 off-chain components."
 optional = false
 python-versions = "<4.0,>=3.13"
 groups = ["main"]
 markers = "implementation_name == \"cpython\" or implementation_name == \"pypy\""
 files = [
-    {file = "vision_common-0.1.0-py3-none-any.whl", hash = "sha256:9562e21438bde6a4734f3c39a00dcb60602ae7246ee52c19f7845978985842e2"},
-    {file = "vision_common-0.1.0.tar.gz", hash = "sha256:6243a8eb4d6f73f74e679fd36408d8bd5fc5984c580f471f1478f9209456f4de"},
+    {file = "vision_common-0.2.0-py3-none-any.whl", hash = "sha256:240aa4303f9fc7d90e198b25ffdb9c05da9fddbf7e596db1250db83e5f3101ff"},
+    {file = "vision_common-0.2.0.tar.gz", hash = "sha256:12f6c9bc36460d0934ad08820f2261e48f262fce23a9aeaed853b57d250a3fdc"},
 ]
 
 [package.dependencies]
@@ -3884,7 +3884,6 @@ prompt-toolkit = {version = "3.0.50", markers = "python_version >= \"3.13\" and 
 propcache = {version = "0.2.1", markers = "python_version >= \"3.13\" and python_version < \"4.0\""}
 protobuf = {version = "5.29.3", markers = "python_version >= \"3.13\" and python_version < \"4.0\""}
 py-ecc = {version = "6.0.0", markers = "python_version >= \"3.13\" and python_version < \"4\""}
-pyaml-env = {version = "1.2.1", markers = "python_version >= \"3.13\" and python_version < \"4.0\""}
 pycryptodome = {version = "3.20.0", markers = "python_version >= \"3.13\" and python_version < \"4.0\""}
 pydantic = {version = "2.10.6", markers = "python_version >= \"3.13\" and python_version < \"4\""}
 pydantic-core = {version = "2.27.2", markers = "python_version >= \"3.13\" and python_version < \"4\""}
@@ -4178,4 +4177,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "ac1e53001e9c3b299439d6567390588115812b1d02a257627ef846c24bc87b25"
+content-hash = "f2d166de506ac49cc538df0766e3df9e2026d32fe00bc68d09cedb16852bfe14"
