@@ -2690,15 +2690,15 @@ test = ["factory-boy (==2.11.1)", "hypothesis (>=5,<6)", "importlib-metadata (<5
 
 [[package]]
 name = "py-geth"
-version = "5.3.0"
+version = "5.4.0"
 description = "py-geth: Run Go-Ethereum as a subprocess"
 optional = false
 python-versions = "<4,>=3.8"
 groups = ["test"]
 markers = "implementation_name == \"cpython\" or implementation_name == \"pypy\""
 files = [
-    {file = "py_geth-5.3.0-py3-none-any.whl", hash = "sha256:7b7aa1765aaeb1cf2e8ced50a4128e55027a992134d187ed6e9624bac17a05cd"},
-    {file = "py_geth-5.3.0.tar.gz", hash = "sha256:ad04b204d8ea964effc441b10ab08056d003751b5595c45a0b983c69b38dc39f"},
+    {file = "py_geth-5.4.0-py3-none-any.whl", hash = "sha256:e8c841b9117c5846f97b76a0a87816c5fdcac18b9d56dcd7a7183d7114f069b1"},
+    {file = "py_geth-5.4.0.tar.gz", hash = "sha256:4013db51de3e61b3744ae5595e3a8efc810f904a25de48641efd67d0334be5c0"},
 ]
 
 [package.dependencies]
@@ -3059,7 +3059,6 @@ description = "Python for Window Extensions"
 optional = false
 python-versions = "*"
 groups = ["main", "test"]
-markers = "(implementation_name == \"cpython\" or implementation_name == \"pypy\") and platform_system == \"Windows\""
 files = [
     {file = "pywin32-308-cp310-cp310-win32.whl", hash = "sha256:796ff4426437896550d2981b9c2ac0ffd75238ad9ea2d3bfa67a1abd546d262e"},
     {file = "pywin32-308-cp310-cp310-win_amd64.whl", hash = "sha256:4fc888c59b3c0bef905ce7eb7e2106a07712015ea1c8234b703a088d46110e8e"},
@@ -3080,6 +3079,7 @@ files = [
     {file = "pywin32-308-cp39-cp39-win32.whl", hash = "sha256:7873ca4dc60ab3287919881a7d4f88baee4a6e639aa6962de25a98ba6b193341"},
     {file = "pywin32-308-cp39-cp39-win_amd64.whl", hash = "sha256:71b3322d949b4cc20776436a9c9ba0eeedcbc9c650daa536df63f0ff111bb920"},
 ]
+markers = {main = "platform_system == \"Windows\" and (implementation_name == \"cpython\" or implementation_name == \"pypy\")", test = "(implementation_name == \"cpython\" or implementation_name == \"pypy\") and platform_system == \"Windows\""}
 
 [[package]]
 name = "pyyaml"
@@ -3642,11 +3642,11 @@ description = "List processing tools and functional utilities"
 optional = false
 python-versions = ">=3.8"
 groups = ["main", "test"]
+markers = "implementation_name == \"cpython\" or implementation_name == \"pypy\""
 files = [
     {file = "toolz-1.0.0-py3-none-any.whl", hash = "sha256:292c8f1c4e7516bf9086f8850935c799a874039c8bcf959d47b600e4c44a6236"},
     {file = "toolz-1.0.0.tar.gz", hash = "sha256:2c86e3d9a04798ac556793bced838816296a2f085017664e4995cb40a1047a02"},
 ]
-markers = {main = "implementation_name == \"pypy\" or implementation_name == \"cpython\"", test = "implementation_name == \"cpython\" or implementation_name == \"pypy\""}
 
 [[package]]
 name = "tornado"
@@ -3715,7 +3715,7 @@ version = "2.32.0.20250328"
 description = "Typing stubs for requests"
 optional = false
 python-versions = ">=3.9"
-groups = ["lint", "test"]
+groups = ["test"]
 markers = "implementation_name == \"cpython\" or implementation_name == \"pypy\""
 files = [
     {file = "types_requests-2.32.0.20250328-py3-none-any.whl", hash = "sha256:72ff80f84b15eb3aa7a8e2625fffb6a93f2ad5a0c20215fc1dcfa61117bcb2a2"},
@@ -3770,7 +3770,7 @@ version = "2.3.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.9"
-groups = ["main", "lint", "test"]
+groups = ["main", "test"]
 markers = "implementation_name == \"cpython\" or implementation_name == \"pypy\""
 files = [
     {file = "urllib3-2.3.0-py3-none-any.whl", hash = "sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df"},
@@ -4177,4 +4177,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "a173e87c86617636ce560da53c6e58d5697fe201819fe9f75883f5762d61e6ba"
+content-hash = "72faa96ffa0089beeb86a9886d42c2f9386e461f8f2b4a60c6085fa49ad202e9"
