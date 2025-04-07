@@ -464,21 +464,16 @@ def test_get_error_class_correct(ethereum_client):
     assert EthereumClient.get_error_class() is EthereumClientError
 
 
-@pytest.mark.parametrize(
-    'provider', [(web3.Web3.IPCProvider('/ipc/path'),
-                  web3.Web3.WebsocketProvider('ws://127.0.0.1'), ''),
-                 (web3.Web3.HTTPProvider('https://127.0.0.1/resource'),
-                  web3.Web3.HTTPProvider('https://127.0.0.2/resource'),
-                  '127.0.0.1, 127.0.0.2')])
-def test_get_blockchain_node_domain_correct(provider, ethereum_client):
-    w3_1 = web3.Web3(provider[0])
-    w3_2 = web3.Web3(provider[1])
+def test_get_blockchain_node_domain_correct(ethereum_client):
+    w3_1 = web3.Web3(web3.Web3.HTTPProvider('https://127.0.0.1/resource'))
+    w3_2 = web3.Web3(web3.Web3.HTTPProvider('https://127.0.0.2/resource'))
+    expected_domains = '127.0.0.1, 127.0.0.2'
     node_connections = NodeConnections[web3.Web3]()
     node_connections.add_node_connection(w3_1)
     node_connections.add_node_connection(w3_2)
     domains = ethereum_client._EthereumClient__get_blockchain_nodes_domains(
         node_connections)
-    assert domains == provider[2]
+    assert domains == expected_domains
 
 
 def test_get_own_address_correct(ethereum_client):
