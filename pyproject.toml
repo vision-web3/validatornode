@@ -16,7 +16,7 @@ namespaces = true
 
 [tool.poetry.group.test.dependencies]
 pytest = "8.3.5"
-pytest-cov = "6.1.0"
+pytest-cov = "6.1.1"
 web3 = {extras = ["tester"], version = "^6.5.0"}
 
 [tool.poetry.group.lint.dependencies]
