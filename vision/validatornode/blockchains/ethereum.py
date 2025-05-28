@@ -29,7 +29,7 @@ from vision.validatornode.database import access as database_access
 from vision.validatornode.entities import CrossChainTransfer
 
 _HUB_TRANSFER_TO_FUNCTION_SELECTOR = '0x92557c8a'
-_HUB_TRANSFER_TO_BASE_GAS = 150000
+_HUB_TRANSFER_TO_BASE_GAS = 250000
 _HUB_TRANSFER_TO_GAS_PER_SIGNER = 100000
 
 _NON_MATCHING_FORWARDER_ERROR = \
