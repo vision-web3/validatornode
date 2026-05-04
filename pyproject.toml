@@ -24,7 +24,7 @@ bandit = "1.8.3"
 flake8 = "7.2.0"
 isort = "6.0.1"
 mypy = "1.15.0"
-types-pyyaml = "6.0.12.20250402"
+types-pyyaml = "6.0.12.20260408"
 yapf = "0.43.0"
 
 [tool.poetry.group.dev.dependencies]
